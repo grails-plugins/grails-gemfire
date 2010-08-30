@@ -7,7 +7,10 @@ class GemfireGrailsPlugin {
     def dependsOn = [:]
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
-            "grails-app/views/error.gsp"
+            "grails-app/views/error.gsp",
+            "grails-app/controllers/**",
+            "grails-app/views/simpleTemplate/*",
+            "**/.gitignore"
     ]
 
     // TODO Fill in these fields
@@ -27,7 +30,13 @@ data management platform.
     }
 
     def doWithSpring = {
-        // TODO Implement runtime spring config (optional)
+        defaultGemfireCache(org.springframework.data.gemfire.CacheFactoryBean){}
+        basicRegion(org.springframework.data.gemfire.RegionFactoryBean) {
+            cache = defaultGemfireCache
+        }
+        gemfireTemplate(org.springframework.data.gemfire.GemfireTemplate) {
+            region = basicRegion
+        }
     }
 
     def doWithDynamicMethods = { ctx ->

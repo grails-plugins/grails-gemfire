@@ -14,18 +14,19 @@ grails.project.dependency.resolution = {
         grailsHome()
         grailsCentral()
 
-        // uncomment the below to enable remote dependency resolution
-        // from public Maven repositories
-        //mavenLocal()
-        //mavenCentral()
-        //mavenRepo "http://snapshots.repository.codehaus.org"
-        //mavenRepo "http://repository.codehaus.org"
-        //mavenRepo "http://download.java.net/maven/2/"
-        //mavenRepo "http://repository.jboss.com/maven2/"
+        mavenRepo 'http://maven.springframework.org/snapshot'
+        mavenRepo 'http://dist.gemstone.com/maven/release'
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
         // runtime 'mysql:mysql-connector-java:5.1.5'
+        
+        compile('org.springframework.data.gemfire:spring-gemfire:1.0.0.M1') {
+            excludes 'spring-context', 'spring-tx', 'antlr'
+        }
+        compile('com.gemstone.gemfire:gemfire:6.0.1.A') {
+            excludes 'antlr'
+        }
     }
 }

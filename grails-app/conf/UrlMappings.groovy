@@ -7,6 +7,15 @@ class UrlMappings {
 			}
 		}
 
+        "/add/$key/$value" {
+            controller = 'simpleTemplate'
+            action = 'addToCache'
+        }
+        
+        "/displayCache" {
+            controller = 'simpleTemplate'
+            action = 'displayCache'
+        }
 		"/"(view:"/index")
 		"500"(view:'/error')
 	}
