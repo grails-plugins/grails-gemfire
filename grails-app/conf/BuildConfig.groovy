@@ -14,7 +14,7 @@ grails.project.dependency.resolution = {
         grailsHome()
         grailsCentral()
 
-        mavenRepo 'http://maven.springframework.org/snapshot'
+        mavenRepo 'http://maven.springframework.org/milestone'
         mavenRepo 'http://dist.gemstone.com/maven/release'
     }
     dependencies {
