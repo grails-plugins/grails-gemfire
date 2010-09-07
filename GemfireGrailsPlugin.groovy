@@ -31,11 +31,21 @@ data management platform.
 
     def doWithSpring = {
         defaultGemfireCache(org.springframework.data.gemfire.CacheFactoryBean){}
-        basicRegion(org.springframework.data.gemfire.RegionFactoryBean) {
-            cache = defaultGemfireCache
-        }
-        gemfireTemplate(org.springframework.data.gemfire.GemfireTemplate) {
-            region = basicRegion
+
+        def replicatedRegions = application.config.grails?.gemfire?.regions?.replicated
+        replicatedRegions?.each { regionName ->
+            "${regionName}GemfireRegion"(org.springframework.data.gemfire.RegionFactoryBean) {
+                dataPolicy = 'REPLICATE'
+                cache = defaultGemfireCache
+                name = regionName
+                scope = 'DISTRIBUTED_ACK'
+            }
+            "${regionName}GemfireTemplate"(org.springframework.data.gemfire.GemfireTemplate) {
+                region = ref("${regionName}GemfireRegion")
+            }
+            "${regionName}Gemfire"(org.grails.gemfire.GemfireHelper) {
+                template = ref("${regionName}GemfireTemplate")
+            }
         }
     }
 
