@@ -1,3 +1,5 @@
+plugin.xml
+grails-gemfire-*.zip
 stacktrace.log
 target
 
