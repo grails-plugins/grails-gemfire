@@ -7,6 +7,11 @@ class UrlMappings {
 			}
 		}
 
+        "/get/$key" {
+            controller = 'simpleTemplate'
+            action = 'retrieveFromCache'
+        }
+        
         "/remove/$key" {
             controller = 'simpleTemplate'
             action = 'removeFromCache'

@@ -27,6 +27,38 @@ class GemfireHelper {
         gemfireTemplate.execute callback
     }
     
+    void putAt(key, value) {
+        def callback = { Region reg ->
+            reg.put key, value
+        } as GemfireCallback
+
+        gemfireTemplate.execute callback
+    }
+
+    def getAt(String key) {
+        def callback = { Region reg ->
+            reg.get key
+        } as GemfireCallback
+
+        gemfireTemplate.execute callback
+    }
+
+    def getAt(key) {
+        def callback = { Region reg ->
+            reg.get key
+        } as GemfireCallback
+
+        gemfireTemplate.execute callback
+    }
+
+    void putAt(String key, value) {
+        def callback = { Region reg ->
+            reg.put key, value
+        } as GemfireCallback
+
+        gemfireTemplate.execute callback
+    }
+
     def entrySet() {
         def callback = { Region reg ->
             reg.entrySet()

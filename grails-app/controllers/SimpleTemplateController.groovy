@@ -11,8 +11,14 @@ class SimpleTemplateController {
     def addToCache = {
         def key = params.key
         def value = params.value
-        region1Gemfire.put key, value
+        region1Gemfire[key] = value
         redirect action: 'displayCache'
+    }
+    
+    def retrieveFromCache = {
+        def key = params.key
+        def value = region1Gemfire[key]
+        render "Retrieved value from cache... ${key} = ${value}"
     }
     
     def displayCache = {

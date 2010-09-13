@@ -36,4 +36,14 @@ class SimpleGemfireTemplateTests extends functionaltestplugin.FunctionalTestCase
         assertStatus 200
         assertContentDoesNotContain 'tempKey = tempValue'
     }
+    
+    void testRetrievingValueFromCache() {
+        get '/add/framework/Grails'
+        assertStatus 200
+        assertContentContains 'framework = Grails'
+        
+        get '/get/framework'
+        assertStatus 200
+        assertContentContains 'Retrieved value from cache... framework = Grails'
+    }
 }
