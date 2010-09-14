@@ -83,6 +83,8 @@ log4j = {
 }
 
 grails.gemfire.regions.replicated = {
-    region1()
+    region1 {
+        entryTimeToLive = 5
+    }
     region2()
 }

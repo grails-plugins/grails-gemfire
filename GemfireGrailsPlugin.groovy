@@ -1,3 +1,5 @@
+import groovy.lang.Closure;
+
 import org.grails.gemfire.RegionMetadataBuilder
 
 class GemfireGrailsPlugin {
@@ -37,7 +39,7 @@ data management platform.
         def replicatedRegions = application.config.grails?.gemfire?.regions?.replicated
         if(replicatedRegions instanceof Closure) {
             def builder = new RegionMetadataBuilder()
-                       
+            replicatedRegions.resolveStrategy = Closure.DELEGATE_FIRST
             replicatedRegions.delegate = builder
             replicatedRegions()
             
