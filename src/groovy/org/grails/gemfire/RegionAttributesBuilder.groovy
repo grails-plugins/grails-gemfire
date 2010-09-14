@@ -33,6 +33,14 @@ class RegionAttributesBuilderHelper extends AttributesFactory {
         }
     }
     
+    void setEntryIdleTimeout(timeout) {
+        if(timeout instanceof ExpirationAttributes) {
+            super.setEntryIdleTimeout(timeout)
+        } else {
+            super.setEntryIdleTimeout(new ExpirationAttributes(timeout, ExpirationAction.DESTROY))
+        }
+    }
+    
     def getAttributes() {
         create()
     }

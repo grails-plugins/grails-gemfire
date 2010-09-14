@@ -19,4 +19,20 @@ class RegionAttributesBuilderTests extends GroovyTestCase {
 
         assertEquals 42, attributes.entryTimeToLive.timeout
     }
+    
+    void testIntegerIdleTimeout() {
+        def attributes = RegionAttributesBuilder.execute {
+            entryIdleTimeout = 7
+        }
+        
+        assertEquals 7, attributes.entryIdleTimeout.timeout
+    }
+    
+    void testExpirationAttributesIdleTimeout() {
+        def attributes = RegionAttributesBuilder.execute {
+            entryIdleTimeout = new ExpirationAttributes(42)
+        }
+        
+        assertEquals 42, attributes.entryIdleTimeout.timeout
+    }
 }
