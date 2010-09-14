@@ -82,4 +82,7 @@ log4j = {
     warn   'org.mortbay.log'
 }
 
-grails.gemfire.regions.replicated = ['region1', 'region2']
+grails.gemfire.regions.replicated = {
+    region1()
+    region2()
+}

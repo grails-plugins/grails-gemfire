@@ -1,3 +1,5 @@
+import org.grails.gemfire.RegionMetadataBuilder
+
 class GemfireGrailsPlugin {
     // the plugin version
     def version = "0.1-SNAPSHOT"
@@ -33,18 +35,31 @@ data management platform.
         defaultGemfireCache(org.springframework.data.gemfire.CacheFactoryBean){}
 
         def replicatedRegions = application.config.grails?.gemfire?.regions?.replicated
-        replicatedRegions?.each { regionName ->
-            "${regionName}GemfireRegion"(org.springframework.data.gemfire.RegionFactoryBean) {
-                dataPolicy = 'REPLICATE'
-                cache = defaultGemfireCache
-                name = regionName
-                scope = 'DISTRIBUTED_ACK'
-            }
-            "${regionName}GemfireTemplate"(org.springframework.data.gemfire.GemfireTemplate) {
-                region = ref("${regionName}GemfireRegion")
-            }
-            "${regionName}Gemfire"(org.grails.gemfire.GemfireHelper) {
-                template = ref("${regionName}GemfireTemplate")
+        if(replicatedRegions instanceof Closure) {
+            def builder = new RegionMetadataBuilder()
+                       
+            replicatedRegions.delegate = builder
+            replicatedRegions()
+            
+            def regions = builder.regions
+            regions.each { regionMetadata ->
+                def regionName = regionMetadata.name
+                def regionAttributes = regionMetadata.attributes
+                "${regionName}GemfireRegion"(org.springframework.data.gemfire.RegionFactoryBean) {
+                    dataPolicy = 'REPLICATE'
+                    cache = defaultGemfireCache
+                    name = regionName
+                    scope = 'DISTRIBUTED_ACK'
+                    if(regionAttributes) {
+                        attributes = regionAttributes
+                    }
+                }
+                "${regionName}GemfireTemplate"(org.springframework.data.gemfire.GemfireTemplate) {
+                    region = ref("${regionName}GemfireRegion")
+                }
+                "${regionName}Gemfire"(org.grails.gemfire.GemfireHelper) {
+                    template = ref("${regionName}GemfireTemplate")
+                }
             }
         }
     }
