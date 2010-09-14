@@ -59,7 +59,7 @@ data management platform.
                 "${regionName}GemfireTemplate"(org.springframework.data.gemfire.GemfireTemplate) {
                     region = ref("${regionName}GemfireRegion")
                 }
-                "${regionName}grail"(org.grails.gemfire.GemfireHelper) {
+                "${regionName}"(org.grails.gemfire.GemfireHelper) {
                     template = ref("${regionName}GemfireTemplate")
                 }
             }
