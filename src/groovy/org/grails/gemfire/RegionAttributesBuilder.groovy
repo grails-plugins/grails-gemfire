@@ -19,19 +19,21 @@ class RegionAttributesBuilder {
     }
 }
 
-class RegionAttributesBuilderHelper {
+class RegionAttributesBuilderHelper extends AttributesFactory {
     
-    @Delegate AttributesFactory attributesFactory = new AttributesFactory(statisticsEnabled: true)
-    
+    RegionAttributesBuilderHelper() {
+        statisticsEnabled = true
+    }
+
     void setEntryTimeToLive(timeToLive) {
         if(timeToLive instanceof ExpirationAttributes) {
-            attributesFactory.entryTimeToLive = timeToLive
+            super.setEntryTimeToLive(timeToLive)
         } else {
-            attributesFactory.entryTimeToLive = new ExpirationAttributes(timeToLive, ExpirationAction.DESTROY)
+			super.setEntryTimeToLive(new ExpirationAttributes(timeToLive, ExpirationAction.DESTROY))
         }
     }
     
     def getAttributes() {
-        attributesFactory.create()
+        create()
     }
 }
