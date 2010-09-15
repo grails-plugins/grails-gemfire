@@ -82,7 +82,7 @@ log4j = {
     warn   'org.mortbay.log'
 }
 
-grails.gemfire.regions.replicated = {
+grails.gemfire.regions = {
     region1 {
         entryTimeToLive = expirationAttributes(5)
     }

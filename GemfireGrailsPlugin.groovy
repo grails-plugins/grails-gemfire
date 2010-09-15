@@ -31,17 +31,17 @@ data management platform.
     def doWithSpring = {
         defaultGemfireCache(org.springframework.data.gemfire.CacheFactoryBean){}
 
-        def replicatedRegions = application.config.grails?.gemfire?.regions?.replicated
-        if(replicatedRegions instanceof Closure) {
+        def regions = application.config.grails?.gemfire?.regions
+        if(regions instanceof Closure) {
             def builder = new RegionMetadataBuilder()
-            replicatedRegions.resolveStrategy = Closure.DELEGATE_FIRST
-            replicatedRegions.delegate = builder
-            replicatedRegions()
+            regions.resolveStrategy = Closure.DELEGATE_FIRST
+            regions.delegate = builder
+            regions()
             
-            def regions = builder.regions
-            regions.each { regionMetadata ->
-                def regionName = regionMetadata.name
-                def regionAttributes = regionMetadata.attributes
+            def regionMetada = builder.regions
+            regionMetada.each { metadata ->
+                def regionName = metadata.name
+                def regionAttributes = metadata.attributes
                 "${regionName}GemfireRegion"(org.springframework.data.gemfire.RegionFactoryBean) {
                     cache = defaultGemfireCache
                     name = regionName
