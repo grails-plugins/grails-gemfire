@@ -8,7 +8,7 @@ If a region were configured like this:
 {code}
 // grails-app/conf/Config.groovy
 
-grails.gemfire.region = {
+grails.gemfire.regions = {
     
     departmentData {
         entryTimeToLive = expirationAttributes(120)
