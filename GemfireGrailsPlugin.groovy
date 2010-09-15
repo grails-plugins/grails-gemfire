@@ -48,10 +48,8 @@ data management platform.
                 def regionName = regionMetadata.name
                 def regionAttributes = regionMetadata.attributes
                 "${regionName}GemfireRegion"(org.springframework.data.gemfire.RegionFactoryBean) {
-                    dataPolicy = 'REPLICATE'
                     cache = defaultGemfireCache
                     name = regionName
-                    scope = 'DISTRIBUTED_ACK'
                     if(regionAttributes) {
                         attributes = regionAttributes
                     }
