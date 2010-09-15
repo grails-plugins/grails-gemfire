@@ -19,7 +19,9 @@ class RegionAttributesBuilder {
     }
 }
 
-class RegionAttributesBuilderHelper extends AttributesFactory {
+class RegionAttributesBuilderHelper {
+    
+    @Delegate AttributesFactory attributesFactory = new AttributesFactory(statisticsEnabled: true)
     
     RegionAttributesBuilderHelper() {
         statisticsEnabled = true
