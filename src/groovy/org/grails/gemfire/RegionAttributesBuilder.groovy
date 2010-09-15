@@ -5,6 +5,7 @@ import com.gemstone.gemfire.cache.DataPolicy
 import com.gemstone.gemfire.cache.ExpirationAction 
 import com.gemstone.gemfire.cache.ExpirationAttributes 
 import com.gemstone.gemfire.cache.RegionAttributes 
+import com.gemstone.gemfire.cache.Scope
 
 class RegionAttributesBuilder {
 
@@ -73,6 +74,22 @@ class RegionAttributesBuilderHelper {
     
     def getREPLICATE() {
         DataPolicy.REPLICATE
+    }
+    
+    def getDISTRIBUTED_ACK() {
+        Scope.DISTRIBUTED_ACK
+    }
+    
+    def getDISTRIBUTED_NO_ACK() {
+        Scope.DISTRIBUTED_NO_ACK
+    }
+    
+    def getGLOBAL() {
+        Scope.GLOBAL
+    }
+    
+    def getLOCAL() {
+        Scope.LOCAL
     }
     
     def getAttributes() {

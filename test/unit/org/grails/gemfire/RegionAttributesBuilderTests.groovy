@@ -3,6 +3,7 @@ package org.grails.gemfire
 import com.gemstone.gemfire.cache.DataPolicy
 import com.gemstone.gemfire.cache.ExpirationAction 
 import com.gemstone.gemfire.cache.ExpirationAttributes 
+import com.gemstone.gemfire.cache.Scope;
 
 class RegionAttributesBuilderTests extends GroovyTestCase {
 
@@ -69,7 +70,29 @@ class RegionAttributesBuilderTests extends GroovyTestCase {
         
         assertEquals 42, attributes.entryIdleTimeout.timeout
     }
-    
+
+    void testScope() {
+        def attributes = RegionAttributesBuilder.execute {
+            scope = DISTRIBUTED_ACK
+        }
+        assertEquals Scope.DISTRIBUTED_ACK, attributes.scope
+        
+        attributes = RegionAttributesBuilder.execute {
+            scope = DISTRIBUTED_NO_ACK
+        }
+        assertEquals Scope.DISTRIBUTED_NO_ACK, attributes.scope
+        
+        attributes = RegionAttributesBuilder.execute {
+            scope = GLOBAL
+        }
+        assertEquals Scope.GLOBAL, attributes.scope
+        
+        attributes = RegionAttributesBuilder.execute {
+            scope = LOCAL
+        }
+        assertEquals Scope.LOCAL, attributes.scope
+    }    
+
     void testDataPolicy() {
         def attributes = RegionAttributesBuilder.execute {
             dataPolicy = EMPTY
