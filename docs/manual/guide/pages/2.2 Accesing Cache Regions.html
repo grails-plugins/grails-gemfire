@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <title>2.2 Accesing Cache Regions</title>
+        <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" title="Ref" charset="utf-8"/>
+    </head>
+    <body class="body">
+    For each configured cache region a bean is added to the Spring application 
+with a corresponding name.  Those beans are the simplest way for the 
+to interact with the cache region.  The bean may be treated as a map
+of key value pairs.<p class="paragraph"/>If a region were configured like this:<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy<p class="paragraph"/>grails.gemfire.region = &#123;<p class="paragraph"/>    departmentData &#123;
+        entryTimeToLive = expirationAttributes(120)
+    &#125;<p class="paragraph"/>&#125;</pre></div><p class="paragraph"/>It could be accessed like this:<p class="paragraph"/><div class="code"><pre>// grails&#45;app/controllers/com/demo/ReportingController.groovy<p class="paragraph"/><span class="java&#45;keyword">package</span> com.demo<p class="paragraph"/>class ReportingController &#123;<p class="paragraph"/>    def departmentData<p class="paragraph"/>    def index = &#123;
+        def hrData = departmentData&#91;'hr'&#93;
+        def accountData = departmentData&#91;'accounting'&#93;<p class="paragraph"/>        // &#8230;
+    &#125;<p class="paragraph"/>    def addToCache = &#123;
+        def key = params.key
+        def value = params.value
+        departmentData&#91;key&#93; = value<p class="paragraph"/>        redirect action: 'list'
+    &#125;<p class="paragraph"/>    // &#8230;
+&#125;</pre></div><p class="paragraph"/><p class="paragraph"/><p class="paragraph"/>
+    </body>
+</html>
