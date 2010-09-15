@@ -1,5 +1,6 @@
 package org.grails.gemfire
 
+import com.gemstone.gemfire.cache.DataPolicy
 import com.gemstone.gemfire.cache.ExpirationAction 
 import com.gemstone.gemfire.cache.ExpirationAttributes 
 
@@ -67,5 +68,37 @@ class RegionAttributesBuilderTests extends GroovyTestCase {
         }
         
         assertEquals 42, attributes.entryIdleTimeout.timeout
+    }
+    
+    void testDataPolicy() {
+        def attributes = RegionAttributesBuilder.execute {
+            dataPolicy = EMPTY
+        }
+        assertEquals DataPolicy.EMPTY, attributes.dataPolicy
+        
+        attributes = RegionAttributesBuilder.execute {
+            dataPolicy = NORMAL
+        }
+        assertEquals DataPolicy.NORMAL, attributes.dataPolicy
+        
+        attributes = RegionAttributesBuilder.execute {
+            dataPolicy = PARTITION
+        }
+        assertEquals DataPolicy.PARTITION, attributes.dataPolicy
+        
+        attributes = RegionAttributesBuilder.execute {
+            dataPolicy = PERSISTENT_REPLICATE
+        }
+        assertEquals DataPolicy.PERSISTENT_REPLICATE, attributes.dataPolicy
+        
+        attributes = RegionAttributesBuilder.execute {
+            dataPolicy = PRELOADED
+        }
+        assertEquals DataPolicy.PRELOADED, attributes.dataPolicy
+        
+        attributes = RegionAttributesBuilder.execute {
+            dataPolicy = REPLICATE
+        }
+        assertEquals DataPolicy.REPLICATE, attributes.dataPolicy
     }
 }
