@@ -24,24 +24,12 @@ class RegionAttributesBuilderHelper extends AttributesFactory {
     RegionAttributesBuilderHelper() {
         statisticsEnabled = true
     }
+    
+    def expirationAttributes(timeout) {
+        new ExpirationAttributes(timeout)
+    }
 
-    void setEntryTimeToLive(timeToLive) {
-        if(timeToLive instanceof ExpirationAttributes) {
-            super.setEntryTimeToLive(timeToLive)
-        } else {
-			super.setEntryTimeToLive(new ExpirationAttributes(timeToLive, ExpirationAction.DESTROY))
-        }
-    }
-    
-    void setEntryIdleTimeout(timeout) {
-        if(timeout instanceof ExpirationAttributes) {
-            super.setEntryIdleTimeout(timeout)
-        } else {
-            super.setEntryIdleTimeout(new ExpirationAttributes(timeout, ExpirationAction.DESTROY))
-        }
-    }
-    
-    def getAttributes() {
+        def getAttributes() {
         create()
     }
 }

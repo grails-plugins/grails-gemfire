@@ -4,9 +4,9 @@ import com.gemstone.gemfire.cache.ExpirationAttributes
 
 class RegionAttributesBuilderTests extends GroovyTestCase {
 
-    void testIntegerTimeToLive() {
+    void testTimeToLiveWithExpirationAttributesConvenienceMethod() {
         def attributes = RegionAttributesBuilder.execute {
-            entryTimeToLive = 7
+            entryTimeToLive = expirationAttributes(7)
         }
 
         assertEquals 7, attributes.entryTimeToLive.timeout
@@ -20,9 +20,9 @@ class RegionAttributesBuilderTests extends GroovyTestCase {
         assertEquals 42, attributes.entryTimeToLive.timeout
     }
     
-    void testIntegerIdleTimeout() {
+    void testIdleTimeoutWithExpirationAttributesConvenienceMethod() {
         def attributes = RegionAttributesBuilder.execute {
-            entryIdleTimeout = 7
+            entryIdleTimeout = expirationAttributes(7)
         }
         
         assertEquals 7, attributes.entryIdleTimeout.timeout

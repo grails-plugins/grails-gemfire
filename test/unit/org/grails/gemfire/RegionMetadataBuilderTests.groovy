@@ -7,11 +7,11 @@ class RegionMetadataBuilderTests extends GroovyTestCase {
         def closure = {
             region1()
             region2 {
-                entryTimeToLive = 7
+                entryTimeToLive = expirationAttributes(7)
             }
             region3 {
-                entryTimeToLive = 9
-                entryIdleTimeout = 12
+                entryTimeToLive = expirationAttributes(9)
+                entryIdleTimeout = expirationAttributes(12)
             }
         }
         
