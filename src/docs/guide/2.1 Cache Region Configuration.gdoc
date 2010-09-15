@@ -6,7 +6,7 @@ The code below declares 2 regions with the names @region1@ and @region2@.
 
 {code}
 // grails-app/conf/Config.groovy
-grails.gemfire.region = {
+grails.gemfire.regions = {
     
     // declare region1
     region1()
@@ -23,7 +23,7 @@ Regions may be configured with a syntax like this:
 
 import com.gemstone.gemfire.cache.DataPolicy
 
-grails.gemfire.region = {
+grails.gemfire.regions = {
     
     region1 {
         // configure region1...
@@ -48,7 +48,7 @@ example could be written like this:
 {code}
 // grails-app/conf/Config.groovy
 
-grails.gemfire.region = {
+grails.gemfire.regions = {
     
     region1 {
         // configure region1...
@@ -90,7 +90,7 @@ properties might look something like this:
 import com.gemstone.gemfire.cache.ExpirationAction
 import com.gemstone.gemfire.cache.ExpirationAttributes
 
-grails.gemfire.region = {
+grails.gemfire.regions = {
     
     region1 {
         entryTimeToLive = new ExpirationAttributes(120)
@@ -106,7 +106,7 @@ to be removed.
 {code}
 // grails-app/conf/Config.groovy
 
-grails.gemfire.region = {
+grails.gemfire.regions = {
     
     region1 {
         entryTimeToLive = expirationAttributes(120)
