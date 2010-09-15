@@ -1,0 +1,118 @@
+GemFire regions may be described in @Config.groovy@ by assigning a value to
+the @grails.gemfire.regions@ property.  The value should be a closure which
+contains GemFire Region DSL code.  Details about the DSL are described below.
+
+The code below declares 2 regions with the names @region1@ and @region2@.
+
+{code}
+// grails-app/conf/Config.groovy
+grails.gemfire.region = {
+    
+    // declare region1
+    region1()
+    
+    // declare region2
+    region2()
+}
+{code}
+
+Regions may be configured with a syntax like this:
+
+{code}
+// grails-app/conf/Config.groovy
+
+import com.gemstone.gemfire.cache.DataPolicy
+
+grails.gemfire.region = {
+    
+    region1 {
+        // configure region1...
+        dataPolicy = DataPolicy.REPLICATE
+        publisher = false
+    }
+    
+    region2 {
+        dataPolicy = DataPolicy.PARTITION
+    }
+    
+}
+{code}
+
+The DSL supports all of the configuration attributes which are supported by the 
+[AttributesFactory|http://www.gemstone.com/docs/6.0.1/product/docs/japi/com/gemstone/gemfire/cache/AttributesFactory.html].
+
+The DSL provides some syntax to simplify the configuration and eliminate 
+explicit references to GemFire classes like @DataPolicy@.  The previous 
+example could be written like this:
+
+{code}
+// grails-app/conf/Config.groovy
+
+grails.gemfire.region = {
+    
+    region1 {
+        // configure region1...
+        dataPolicy = REPLICATE
+        publisher = false
+    }
+    
+}
+{code}
+
+The following table lists all of the properties which may be referenced
+directly without a class prefix.
+
+{table}
+*Class* | *Property Name*
+com.gemstone.gemfire.cache.DataPolicy | EMPTY
+com.gemstone.gemfire.cache.DataPolicy | NORMAL
+com.gemstone.gemfire.cache.DataPolicy | PARTITION
+com.gemstone.gemfire.cache.DataPolicy | PERSISTENT_REPLICATE
+com.gemstone.gemfire.cache.DataPolicy | PRELOADED
+com.gemstone.gemfire.cache.DataPolicy | REPLICATE
+com.gemstone.gemfire.cache.ExpirationAction | DESTROY
+com.gemstone.gemfire.cache.ExpirationAction | INVALIDATE
+com.gemstone.gemfire.cache.ExpirationAction | LOCAL_DESTROY
+com.gemstone.gemfire.cache.ExpirationAction | LOCAL_INVALIDATE
+com.gemstone.gemfire.cache.Scope | DISTRIBUTED_ACK
+com.gemstone.gemfire.cache.Scope | DISTRIBUTED_NO_ACK
+com.gemstone.gemfire.cache.Scope | GLOBAL
+com.gemstone.gemfire.cache.Scope | LOCAL
+{table}
+
+Several properties require an instance of the 
+[ExpirationAttributes|http://www.gemstone.com/docs/6.0.1/product/docs/japi/com/gemstone/gemfire/cache/ExpirationAttributes.html]
+class.  These include @regionTimeToLive@, @regionIdleTimeout@, @entryTimeToLive@ and @entryIdleTimeout@.  Configuring those
+properties might look something like this:
+
+{code}
+// grails-app/conf/Config.groovy
+import com.gemstone.gemfire.cache.ExpirationAction
+import com.gemstone.gemfire.cache.ExpirationAttributes
+
+grails.gemfire.region = {
+    
+    region1 {
+        entryTimeToLive = new ExpirationAttributes(120)
+        entryTimeToIdle = new ExpirationAttributes(200, ExpirationAction.DESTROY)
+    }
+    
+}
+{code}
+
+The DSLS allows the explicit references to the @ExpirationAction@ and @ExpirationAttributes@ classes 
+to be removed.
+
+{code}
+// grails-app/conf/Config.groovy
+
+grails.gemfire.region = {
+    
+    region1 {
+        entryTimeToLive = expirationAttributes(120)
+        entryTimeToIdle = expirationAttributes(200, DESTROY)
+    }
+    
+}
+{code}
+

@@ -1,0 +1,4 @@
+GemFire allows your data to be organized within a cache using data regions.  The
+Grails GemFire plugin provides a DSL for describing the regions available to
+the application and provides a simple convention based approach to accessing
+regions.

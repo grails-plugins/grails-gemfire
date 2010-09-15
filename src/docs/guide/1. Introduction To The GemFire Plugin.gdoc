@@ -1,0 +1,6 @@
+The GemFire plugin provides integration with the GemFire in-memory distributed
+data management platform.  
+
+This user guide describes details on configuring and using GemFire specifically 
+in the context of a Grails application.  Complete documentation on GemFire is
+available at [http://www.gemstone.com/products/gemfire|http://www.gemstone.com/products/gemfire].
