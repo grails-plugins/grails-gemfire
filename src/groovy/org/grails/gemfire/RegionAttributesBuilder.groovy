@@ -25,11 +25,31 @@ class RegionAttributesBuilderHelper extends AttributesFactory {
         statisticsEnabled = true
     }
     
-    def expirationAttributes(timeout) {
+    def expirationAttributes(int timeout) {
         new ExpirationAttributes(timeout)
     }
-
-        def getAttributes() {
+    
+    def expirationAttributes(int timeout, ExpirationAction action) {
+        new ExpirationAttributes(timeout, action)
+    }
+    
+    def getINVALIDATE() {
+        ExpirationAction.INVALIDATE
+    }
+    
+    def getLOCAL_INVALIDATE() {
+        ExpirationAction.LOCAL_INVALIDATE
+    }
+    
+    def getDESTROY() {
+        ExpirationAction.DESTROY
+    }
+    
+    def getLOCAL_DESTROY() {
+        ExpirationAction.LOCAL_DESTROY
+    }
+    
+    def getAttributes() {
         create()
     }
 }
