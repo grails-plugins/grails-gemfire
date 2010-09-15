@@ -4,7 +4,7 @@ import org.grails.gemfire.RegionMetadataBuilder
 
 class GemfireGrailsPlugin {
     // the plugin version
-    def version = "0.1-SNAPSHOT"
+    def version = "0.1.M1"
 
         // the version or versions of Grails the plugin is designed for
     def grailsVersion = "1.3.4 > *"
