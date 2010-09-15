@@ -8,10 +8,10 @@
     GemFire regions may be described in <code>Config.groovy</code> by assigning a value to
 the <code>grails.gemfire.regions</code> property.  The value should be a closure which
 contains GemFire Region DSL code.  Details about the DSL are described below.<p class="paragraph"/>The code below declares 2 regions with the names <code>region1</code> and <code>region2</code>.<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy
-grails.gemfire.region = &#123;<p class="paragraph"/>    // declare region1
+grails.gemfire.regions = &#123;<p class="paragraph"/>    // declare region1
     region1()<p class="paragraph"/>    // declare region2
     region2()
-&#125;</pre></div><p class="paragraph"/>Regions may be configured with a syntax like this:<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy<p class="paragraph"/><span class="java&#45;keyword">import</span> com.gemstone.gemfire.cache.DataPolicy<p class="paragraph"/>grails.gemfire.region = &#123;<p class="paragraph"/>    region1 &#123;
+&#125;</pre></div><p class="paragraph"/>Regions may be configured with a syntax like this:<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy<p class="paragraph"/><span class="java&#45;keyword">import</span> com.gemstone.gemfire.cache.DataPolicy<p class="paragraph"/>grails.gemfire.regions = &#123;<p class="paragraph"/>    region1 &#123;
         // configure region1&#8230;
         dataPolicy = DataPolicy.REPLICATE
         publisher = <span class="java&#45;keyword">false</span>
@@ -20,7 +20,7 @@ grails.gemfire.region = &#123;<p class="paragraph"/>    // declare region1
     &#125;<p class="paragraph"/>&#125;</pre></div><p class="paragraph"/>The DSL supports all of the configuration attributes which are supported by the 
 <a href="http://www.gemstone.com/docs/6.0.1/product/docs/japi/com/gemstone/gemfire/cache/AttributesFactory.html" target="blank">AttributesFactory</a>.<p class="paragraph"/>The DSL provides some syntax to simplify the configuration and eliminate 
 explicit references to GemFire classes like <code>DataPolicy</code>.  The previous 
-example could be written like this:<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy<p class="paragraph"/>grails.gemfire.region = &#123;<p class="paragraph"/>    region1 &#123;
+example could be written like this:<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy<p class="paragraph"/>grails.gemfire.regions = &#123;<p class="paragraph"/>    region1 &#123;
         // configure region1&#8230;
         dataPolicy = REPLICATE
         publisher = <span class="java&#45;keyword">false</span>
@@ -30,11 +30,11 @@ directly without a class prefix.<p class="paragraph"/><table class="wiki-table" 
 class.  These include <code>regionTimeToLive</code>, <code>regionIdleTimeout</code>, <code>entryTimeToLive</code> and <code>entryIdleTimeout</code>.  Configuring those
 properties might look something like this:<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy
 <span class="java&#45;keyword">import</span> com.gemstone.gemfire.cache.ExpirationAction
-<span class="java&#45;keyword">import</span> com.gemstone.gemfire.cache.ExpirationAttributes<p class="paragraph"/>grails.gemfire.region = &#123;<p class="paragraph"/>    region1 &#123;
+<span class="java&#45;keyword">import</span> com.gemstone.gemfire.cache.ExpirationAttributes<p class="paragraph"/>grails.gemfire.regions = &#123;<p class="paragraph"/>    region1 &#123;
         entryTimeToLive = <span class="java&#45;keyword">new</span> ExpirationAttributes(120)
         entryTimeToIdle = <span class="java&#45;keyword">new</span> ExpirationAttributes(200, ExpirationAction.DESTROY)
     &#125;<p class="paragraph"/>&#125;</pre></div><p class="paragraph"/>The DSLS allows the explicit references to the <code>ExpirationAction</code> and <code>ExpirationAttributes</code> classes 
-to be removed.<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy<p class="paragraph"/>grails.gemfire.region = &#123;<p class="paragraph"/>    region1 &#123;
+to be removed.<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy<p class="paragraph"/>grails.gemfire.regions = &#123;<p class="paragraph"/>    region1 &#123;
         entryTimeToLive = expirationAttributes(120)
         entryTimeToIdle = expirationAttributes(200, DESTROY)
     &#125;<p class="paragraph"/>&#125;</pre></div><p class="paragraph"/>
