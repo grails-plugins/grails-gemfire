@@ -1,5 +1,5 @@
 For each configured cache region a bean is added to the Spring application 
-with a corresponding name.  Those beans are the simplest way for the 
+context with a corresponding name.  Those beans are the simplest way  
 to interact with the cache region.  The bean may be treated as a map
 of key value pairs.
 
