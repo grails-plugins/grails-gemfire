@@ -32,6 +32,7 @@ grails.gemfire.regions = {
     }
     
     region2 {
+        // configure region2...
         dataPolicy = DataPolicy.PARTITION
     }
     
@@ -54,6 +55,11 @@ grails.gemfire.regions = {
         // configure region1...
         dataPolicy = REPLICATE
         publisher = false
+    }
+
+    region2 {
+        // configure region2...
+        dataPolicy = PARTITION
     }
     
 }
