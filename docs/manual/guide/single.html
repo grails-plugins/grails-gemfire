@@ -43,6 +43,7 @@ grails.gemfire.regions = &#123;<p class="paragraph"/>    // declare region1
         dataPolicy = DataPolicy.REPLICATE
         publisher = <span class="java&#45;keyword">false</span>
     &#125;<p class="paragraph"/>    region2 &#123;
+        // configure region2&#8230;
         dataPolicy = DataPolicy.PARTITION
     &#125;<p class="paragraph"/>&#125;</pre></div><p class="paragraph"/>The DSL supports all of the configuration attributes which are supported by the 
 <a href="http://www.gemstone.com/docs/6.0.1/product/docs/japi/com/gemstone/gemfire/cache/AttributesFactory.html" target="blank">AttributesFactory</a>.<p class="paragraph"/>The DSL provides some syntax to simplify the configuration and eliminate 
@@ -51,6 +52,9 @@ example could be written like this:<p class="paragraph"/><div class="code"><pre>
         // configure region1&#8230;
         dataPolicy = REPLICATE
         publisher = <span class="java&#45;keyword">false</span>
+    &#125;<p class="paragraph"/>    region2 &#123;
+        // configure region2&#8230;
+        dataPolicy = PARTITION
     &#125;<p class="paragraph"/>&#125;</pre></div><p class="paragraph"/>The following table lists all of the properties which may be referenced
 directly without a class prefix.<p class="paragraph"/><table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Class</strong></th><th><strong class="bold">Property Name</strong></th></tr><tr class="table-odd"><td>com.gemstone.gemfire.cache.DataPolicy</td><td>EMPTY</td></tr><tr class="table-even"><td>com.gemstone.gemfire.cache.DataPolicy</td><td>NORMAL</td></tr><tr class="table-odd"><td>com.gemstone.gemfire.cache.DataPolicy</td><td>PARTITION</td></tr><tr class="table-even"><td>com.gemstone.gemfire.cache.DataPolicy</td><td>PERSISTENT_REPLICATE</td></tr><tr class="table-odd"><td>com.gemstone.gemfire.cache.DataPolicy</td><td>PRELOADED</td></tr><tr class="table-even"><td>com.gemstone.gemfire.cache.DataPolicy</td><td>REPLICATE</td></tr><tr class="table-odd"><td>com.gemstone.gemfire.cache.ExpirationAction</td><td>DESTROY</td></tr><tr class="table-even"><td>com.gemstone.gemfire.cache.ExpirationAction</td><td>INVALIDATE</td></tr><tr class="table-odd"><td>com.gemstone.gemfire.cache.ExpirationAction</td><td>LOCAL_DESTROY</td></tr><tr class="table-even"><td>com.gemstone.gemfire.cache.ExpirationAction</td><td>LOCAL_INVALIDATE</td></tr><tr class="table-odd"><td>com.gemstone.gemfire.cache.Scope</td><td>DISTRIBUTED_ACK</td></tr><tr class="table-even"><td>com.gemstone.gemfire.cache.Scope</td><td>DISTRIBUTED_NO_ACK</td></tr><tr class="table-odd"><td>com.gemstone.gemfire.cache.Scope</td><td>GLOBAL</td></tr><tr class="table-even"><td>com.gemstone.gemfire.cache.Scope</td><td>LOCAL</td></tr></table><p class="paragraph"/>Several properties require an instance of the 
 <a href="http://www.gemstone.com/docs/6.0.1/product/docs/japi/com/gemstone/gemfire/cache/ExpirationAttributes.html" target="blank">ExpirationAttributes</a>
@@ -65,7 +69,7 @@ to be removed.<p class="paragraph"/><div class="code"><pre>// grails&#45;app/con
         entryTimeToLive = expirationAttributes(120)
         entryTimeToIdle = expirationAttributes(200, DESTROY)
     &#125;<p class="paragraph"/>&#125;</pre></div><p class="paragraph"/><h2><a name="2.2 Accesing Cache Regions">2.2 Accesing Cache Regions</a></h2>For each configured cache region a bean is added to the Spring application 
-with a corresponding name.  Those beans are the simplest way for the 
+context with a corresponding name.  Those beans are the simplest way  
 to interact with the cache region.  The bean may be treated as a map
 of key value pairs.<p class="paragraph"/>If a region were configured like this:<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy<p class="paragraph"/>grails.gemfire.regions = &#123;<p class="paragraph"/>    departmentData &#123;
         entryTimeToLive = expirationAttributes(120)
