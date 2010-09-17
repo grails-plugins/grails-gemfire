@@ -46,4 +46,14 @@ class SimpleGemfireTemplateTests extends functionaltestplugin.FunctionalTestCase
         assertStatus 200
         assertContentContains 'Retrieved value from cache... framework = Grails'
     }
+    
+    void testRemovingValueFromCache() {
+        get '/add/company/VMware'
+        assertStatus 200
+        assertContentContains 'company = VMware'
+        
+        get '/remove/company'
+        assertStatus 200
+        assertContentDoesNotContain 'company = VMware'
+    }
 }
