@@ -26,6 +26,16 @@ class UrlMappings {
             controller = 'simpleTemplate'
             action = 'displayCache'
         }
+        
+        "/shortValues" {
+            controller = 'simpleTemplate'
+            action = 'displayShortValues'
+        }
+        
+        "/longValues" {
+            controller = 'simpleTemplate'
+            action = 'displayLongValues'
+        }
 		"/"(view:"/index")
 		"500"(view:'/error')
 	}

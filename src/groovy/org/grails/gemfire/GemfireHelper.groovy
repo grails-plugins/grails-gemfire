@@ -10,6 +10,14 @@ class GemfireHelper {
     void setTemplate(template) {
         gemfireTemplate = template
     }
+    
+    def query(q) {
+        def callback = { Region reg ->
+            reg.query q
+        } as GemfireCallback
+
+        gemfireTemplate.execute callback
+    }
 
     def remove(key) {
         def callback = { Region reg ->

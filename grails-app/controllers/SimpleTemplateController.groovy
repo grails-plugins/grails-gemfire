@@ -25,4 +25,20 @@ class SimpleTemplateController {
         def result = region1.entrySet()
         [cacheEntries: result]
     }
+    
+    def displayShortValues = {
+        def q = 'length < 20'
+        def result = region1.query(q)
+        
+        render view: 'queryResults', model: [query: q, results: result]
+        
+    }
+    
+    def displayLongValues = {
+        def q = 'length >= 20'
+        def result = region1.query(q)
+        
+        render view: 'queryResults', model: [query: q, results: result]
+        
+    }
 }

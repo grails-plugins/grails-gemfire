@@ -13,6 +13,7 @@ grails.project.dependency.resolution = {
         grailsPlugins()
         grailsHome()
         grailsCentral()
+        mavenCentral()
 
         mavenRepo 'http://maven.springframework.org/milestone'
         mavenRepo 'http://dist.gemstone.com/maven/release'
@@ -23,7 +24,7 @@ grails.project.dependency.resolution = {
         // runtime 'mysql:mysql-connector-java:5.1.5'
         
         compile('org.springframework.data.gemfire:spring-gemfire:1.0.0.M1') {
-            excludes 'spring-context', 'spring-tx', 'antlr'
+            excludes 'spring-context', 'spring-tx'
         }
         compile('com.gemstone.gemfire:gemfire:6.0.1.A') {
             excludes 'antlr'
