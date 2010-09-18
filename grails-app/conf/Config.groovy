@@ -88,7 +88,7 @@ log4j = {
 
 grails.gemfire.regions = {
     region1 {
-        entryTimeToLive = expirationAttributes(5)
+        entryTimeToLive = expirationAttributes(60, DESTROY)
     }
     region2()
 }
