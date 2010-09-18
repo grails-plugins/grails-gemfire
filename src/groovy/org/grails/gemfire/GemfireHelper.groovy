@@ -7,6 +7,12 @@ class GemfireHelper {
 
     private gemfireTemplate
 
+    def getStatistics() {
+        invokeCallback { Region reg ->
+            reg.getStatistics()
+        }
+    }
+    
     void setTemplate(template) {
         gemfireTemplate = template
     }

@@ -23,7 +23,8 @@ class SimpleTemplateController {
     
     def displayCache = {
         def result = region1.entrySet()
-        [cacheEntries: result]
+        def stats = region1.statistics
+        [cacheEntries: result, statistics: stats]
     }
     
     def displayShortValues = {
@@ -39,6 +40,5 @@ class SimpleTemplateController {
         def result = region1.query(q)
         
         render view: 'queryResults', model: [query: q, results: result]
-        
     }
 }
