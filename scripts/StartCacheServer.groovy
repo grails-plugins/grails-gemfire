@@ -12,8 +12,10 @@ target(main: "Starts a Gemfire Cache server") {
 	else {
 		def name = argsMap.params ? argsMap.params[0] : null
 		if(name) {
-			def cacheConfig = new File("${}/grails-app/conf/cache.xml")
+			def cacheConfig = new File("${basedir}/grails-app/conf/cache.xml")
 			def locators = argsMap.locators ?: null
+			def port = argsMap.port ?: null
+			def mcastPort =  argsMap['mcast-port'] ?: null
 			if(!cacheConfig.exists()) {
 				cacheConfig = new File("${grailsSettings.projectTargetDir}/cache.xml")
 			}
@@ -28,6 +30,12 @@ target(main: "Starts a Gemfire Cache server") {
 					if(locators) {
 						arg value:"locators=$locators"
 						arg value:"mcast-port=0"
+					}
+					if(port) {
+						arg value:"server-port=${port}"
+					}
+					if(mcastPort) {
+						arg value:"mcast-port=${mcastPort}"
 					}
 					arg value:"-dir=$dir"			
 				}
