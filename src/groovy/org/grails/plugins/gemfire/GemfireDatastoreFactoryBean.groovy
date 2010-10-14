@@ -17,7 +17,7 @@ package org.grails.plugins.gemfire
 import org.springframework.beans.factory.FactoryBean
 import org.springframework.datastore.mapping.gemfire.GemfireDatastore
 import org.springframework.datastore.mapping.model.MappingContext
-
+import com.gemstone.gemfire.cache.*
 import org.codehaus.groovy.grails.plugins.GrailsPluginManager
 
 import org.grails.datastore.gorm.events.AutoTimestampInterceptor
@@ -34,9 +34,15 @@ class GemfireDatastoreFactoryBean implements FactoryBean<GemfireDatastore>{
   Map<String, String> config
   MappingContext mappingContext
   GrailsPluginManager pluginManager
+  Cache cache
 
   GemfireDatastore getObject() {
-    def datastore = new GemfireDatastore(mappingContext, config)
+    def datastore;
+ 	if(cache == null)
+		datastore = new GemfireDatastore(mappingContext, config)
+	else
+		datastore = new GemfireDatastore(mappingContext, cache)
+		
     datastore.addEntityInterceptor(new DomainEventInterceptor())
     datastore.addEntityInterceptor(new AutoTimestampInterceptor())
 	datastore.afterPropertiesSet()

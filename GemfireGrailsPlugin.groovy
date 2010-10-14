@@ -1,6 +1,5 @@
 import groovy.lang.Closure;
 
-import org.grails.gemfire.RegionMetadataBuilder
 import org.grails.plugins.gemfire.*
 import org.grails.datastore.gorm.gemfire.*
 import org.grails.datastore.gorm.support.DatastorePersistenceContextInterceptor
@@ -42,7 +41,25 @@ data management platform.
     def documentation = "http://grails.org/plugin/gemfire"
 
     def doWithSpring = {
-        defaultGemfireCache(org.springframework.data.gemfire.CacheFactoryBean){}
+		def servers = application.config.grails?.gemfire?.servers
+		if(servers instanceof Closure) {
+			def serverConfig = new CacheServerBuilder().evaluate(servers)
+			for(entry in serverConfig) {
+				def poolFactory = entry.value.remove('pool')
+				"${entry.key}"(org.springframework.data.gemfire.CacheFactoryBean) {
+					properties = entry.value
+				}
+				if(poolFactory) {
+					"${entry.key}Pool"(org.grails.plugins.gemfire.PoolFactoryBean) {
+						poolFactory = poolFactory
+					}					
+				}
+			}
+		}
+		else {
+        	defaultGemfireCache(org.springframework.data.gemfire.CacheFactoryBean){}			
+		}
+
 
         def regions = application.config.grails?.gemfire?.regions
         if(regions instanceof Closure) {
@@ -55,8 +72,8 @@ data management platform.
             regionMetada.each { metadata ->
                 def regionName = metadata.name
                 def regionAttributes = metadata.attributes
-                "${regionName}GemfireRegion"(org.springframework.data.gemfire.RegionFactoryBean) {
-                    cache = defaultGemfireCache
+                "${regionName}GemfireRegion"(org.springframework.data.gemfire.RegionFactoryBean) { bean ->
+					bean.autowire = true
                     name = regionName
                     if(regionAttributes) {
                         attributes = regionAttributes
@@ -65,7 +82,7 @@ data management platform.
                 "${regionName}GemfireTemplate"(org.springframework.data.gemfire.GemfireTemplate) {
                     region = ref("${regionName}GemfireRegion")
                 }
-                "${regionName}"(org.grails.gemfire.GemfireHelper) {
+                "${regionName}"(org.grails.plugins.gemfire.GemfireHelper) {
                     template = ref("${regionName}GemfireTemplate")
                 }
             }
@@ -83,7 +100,8 @@ data management platform.
           grailsApplication = ref('grailsApplication')
           pluginManager = ref('pluginManager')
         }
-        springDatastore(GemfireDatastoreFactoryBean) {
+        springDatastore(GemfireDatastoreFactoryBean) { bean ->
+		  bean.autowire = true
           config = gemfireConfig
           mappingContext = ref("datastoreMappingContext")
           pluginManager = ref('pluginManager')

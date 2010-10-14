@@ -1,4 +1,4 @@
-package org.grails.gemfire
+package org.grails.plugins.gemfire
 
 import com.gemstone.gemfire.cache.Region
 import org.springframework.data.gemfire.GemfireCallback

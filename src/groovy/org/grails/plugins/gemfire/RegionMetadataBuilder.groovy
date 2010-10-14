@@ -1,4 +1,4 @@
-package org.grails.gemfire
+package org.grails.plugins.gemfire
 
 class RegionMetadataBuilder {
 
