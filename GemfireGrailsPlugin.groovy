@@ -1,6 +1,19 @@
 import groovy.lang.Closure;
 
 import org.grails.gemfire.RegionMetadataBuilder
+import org.grails.plugins.gemfire.*
+import org.grails.datastore.gorm.gemfire.*
+import org.grails.datastore.gorm.support.DatastorePersistenceContextInterceptor
+import org.springframework.datastore.mapping.web.support.OpenSessionInViewInterceptor
+import org.springframework.datastore.mapping.transactions.DatastoreTransactionManager
+import org.grails.datastore.gorm.GormInstanceApi
+import org.codehaus.groovy.grails.commons.GrailsDomainClassProperty
+import org.springframework.datastore.mapping.reflect.ClassPropertyFetcher
+import org.springframework.context.ApplicationContext
+import org.springframework.datastore.mapping.core.Datastore
+import org.springframework.transaction.PlatformTransactionManager
+import org.grails.datastore.gorm.utils.InstanceProxy
+
 
 class GemfireGrailsPlugin {
     // the plugin version
@@ -57,5 +70,70 @@ data management platform.
                 }
             }
         }
+        def gemfireConfig = application.config?.grails?.gemfire?.config
+
+        def existingTransactionManager = manager?.hasGrailsPlugin("hibernate") || getSpringConfig().containsBean("transactionManager")
+        def txManagerName = existingTransactionManager ? 'datastoreTransactionManager' : 'transactionManager'
+
+        "$txManagerName"(DatastoreTransactionManager) {
+          datastore = ref("springDatastore")
+        }
+
+        datastoreMappingContext(GemfireMappingContextFactoryBean) {
+          grailsApplication = ref('grailsApplication')
+          pluginManager = ref('pluginManager')
+        }
+        springDatastore(GemfireDatastoreFactoryBean) {
+          config = gemfireConfig
+          mappingContext = ref("datastoreMappingContext")
+          pluginManager = ref('pluginManager')
+        }
+        datastorePersistenceInterceptor(DatastorePersistenceContextInterceptor, ref("springDatastore"))
+
+        if (manager?.hasGrailsPlugin("controllers")) {
+            datastoreOpenSessionInViewInterceptor(OpenSessionInViewInterceptor) {
+                datastore = ref("springDatastore")
+            }
+            if (getSpringConfig().containsBean("controllerHandlerMappings")) {
+                controllerHandlerMappings.interceptors << datastoreOpenSessionInViewInterceptor
+            }
+            if (getSpringConfig().containsBean("annotationHandlerMapping")) {
+                if (annotationHandlerMapping.interceptors) {
+                    annotationHandlerMapping.interceptors << datastoreOpenSessionInViewInterceptor
+                }
+                else {
+                    annotationHandlerMapping.interceptors = [datastoreOpenSessionInViewInterceptor]
+                }
+            }
+        }
     }
+
+	def doWithDynamicMethods = { ApplicationContext ctx ->
+      Datastore datastore = ctx.getBean(Datastore)
+      PlatformTransactionManager transactionManager = ctx.getBean(DatastoreTransactionManager)
+      def enhancer = transactionManager ?
+                          new GemfireGormEnhancer(datastore, transactionManager) :
+                          new GemfireGormEnhancer(datastore)
+
+      def isHibernateInstalled = manager.hasGrailsPlugin("hibernate")
+      for(entity in datastore.mappingContext.persistentEntities) {
+        if(isHibernateInstalled) {
+          def cls = entity.javaClass
+          def cpf = ClassPropertyFetcher.forClass(cls)
+          def mappedWith = cpf.getStaticPropertyValue(GrailsDomainClassProperty.MAPPING_STRATEGY, String)
+          if(mappedWith == 'gemfire') {
+            enhancer.enhance(entity)
+          }
+          else {
+            def staticApi = new GemfireStaticApi(cls, datastore)
+            def instanceApi = new GormInstanceApi(cls, datastore)
+            cls.metaClass.static.getGemfire = {-> staticApi }
+            cls.metaClass.getGemfire = {-> new InstanceProxy(instance:delegate, target:instanceApi) }
+          }
+        }
+        else {
+          enhancer.enhance(entity)
+        }
+      }		
+	}
 }

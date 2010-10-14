@@ -9,11 +9,13 @@ grails.project.dependency.resolution = {
         // excludes 'ehcache'
     }
     log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
+	useOrigin true
     repositories {
         grailsPlugins()
         grailsHome()
         grailsCentral()
         mavenCentral()
+		mavenLocal()
 
         mavenRepo 'http://maven.springframework.org/milestone'
         mavenRepo 'http://dist.gemstone.com/maven/release'
@@ -29,5 +31,15 @@ grails.project.dependency.resolution = {
         compile('com.gemstone.gemfire:gemfire:6.0.1.A') {
             excludes 'antlr'
         }
+
+	    def excludes = {
+	        excludes "slf4j-simple", "persistence-api", "commons-logging", "jcl-over-slf4j", "slf4j-api", "jta"
+	        excludes "spring-core", "spring-beans", "spring-aop", "spring-tx", "spring-context", "spring-web"
+	    }
+      	compile("org.grails:grails-datastore-gorm:1.0.0.BUILD-SNAPSHOT", excludes)	
+      	compile("org.grails:grails-datastore-gorm-gemfire:1.0.0.BUILD-SNAPSHOT", excludes)
+      	compile( "org.springframework:spring-datastore-web:1.0.0.BUILD-SNAPSHOT", excludes)
+      	test("org.grails:grails-datastore-gorm-test:1.0.0.BUILD-SNAPSHOT", excludes)
+
     }
 }
