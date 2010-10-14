@@ -32,7 +32,7 @@ target(main: "Starts a Gemfire Cache server") {
 						arg value:"mcast-port=0"
 					}
 					if(port) {
-						arg value:"server-port=${port}"
+						arg value:"-server-port=${port}"
 					}
 					if(mcastPort) {
 						arg value:"mcast-port=${mcastPort}"
