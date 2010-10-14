@@ -4,3 +4,5 @@ grails-gemfire-*.zip
 stacktrace.log
 target
 
+locator.log
+start_locator.log
