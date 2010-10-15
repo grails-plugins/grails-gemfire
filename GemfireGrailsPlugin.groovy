@@ -73,7 +73,7 @@ data management platform.
                 def regionName = metadata.name
                 def regionAttributes = metadata.attributes
                 "${regionName}GemfireRegion"(org.springframework.data.gemfire.RegionFactoryBean) { bean ->
-					bean.autowire = true
+					cache = ref("defaultGemfireCache")
                     name = regionName
                     if(regionAttributes) {
                         attributes = regionAttributes
