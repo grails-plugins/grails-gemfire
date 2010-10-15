@@ -9,15 +9,15 @@ grails.project.dependency.resolution = {
         // excludes 'ehcache'
     }
     log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
-	useOrigin true
     repositories {
         grailsPlugins()
         grailsHome()
         grailsCentral()
         mavenCentral()
-		mavenLocal()
 
         mavenRepo 'http://maven.springframework.org/milestone'
+        mavenRepo 'http://maven.springframework.org/snapshot'
+		mavenRepo "http://snapshots.repository.codehaus.org"
         mavenRepo 'http://dist.gemstone.com/maven/release'
     }
     dependencies {
