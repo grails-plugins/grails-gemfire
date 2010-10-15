@@ -1,4 +1,4 @@
-package org.grails.gemfire
+package org.grails.plugins.gemfire
 
 import com.gemstone.gemfire.cache.DataPolicy
 import com.gemstone.gemfire.cache.ExpirationAction 
