@@ -24,6 +24,10 @@ target(main: "Starts a Gemfire Cache server") {
 				println "Starting Gemfire Cache Server..."
 				def dir = "${grailsSettings.projectTargetDir}/cache-servers/$name"
 				ant.mkdir(dir:dir)
+				def appJar = "${grailsSettings.projectTargetDir}/cache-servers/app-classes.jar"
+				def pluginJar = "${grailsSettings.projectTargetDir}/cache-servers/plugin-classes.jar"
+				ant.jar(destfile:appJar,basedir:grailsSettings.classesDir)
+				ant.jar(destfile:pluginJar,basedir:grailsSettings.pluginClassesDir)				
 				def arguments = {
 					arg value:'start'
 					arg value:"cache-xml-file=${cacheConfig.absolutePath}"				
@@ -37,6 +41,11 @@ target(main: "Starts a Gemfire Cache server") {
 					if(mcastPort) {
 						arg value:"mcast-port=${mcastPort}"
 					}
+					def separator = System.getProperty("path.separator")
+					def extraJars = grailsSettings.compileDependencies.findAll { 
+						it.name.contains('groovy-all') || it.name.contains('grails-datastore') || it.name.contains('spring-datastore')
+					}.join(separator)
+					arg value:"-classpath=${appJar}${separator}${pluginJar}${separator}${extraJars}"
 					arg value:"-dir=$dir"			
 				}
 				ant.exec(osfamily:'unix', executable:"$gemfireHome/bin/cacheserver", arguments) 
