@@ -11,6 +11,7 @@ class CacheServerBuilder {
 		callable.delegate = this
 		callable.resolveStrategy = Closure.DELEGATE_FIRST
 		callable.call()		
+		return servers
 	}
 	
 	def invokeMethod(String name, args) {
