@@ -1,5 +1,7 @@
 package org.grails.plugins.gemfire
 
+import com.gemstone.gemfire.cache.client.PoolManager
+
 class CacheServerBuilder {
 	def servers = [:]
 	def currentServer
