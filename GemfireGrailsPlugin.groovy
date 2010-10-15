@@ -42,22 +42,27 @@ data management platform.
 
     def doWithSpring = {
 		def servers = application.config.grails?.gemfire?.servers
+		def cacheName 
+		def poolName
 		if(servers instanceof Closure) {
 			def serverConfig = new CacheServerBuilder().evaluate(servers)
 			for(entry in serverConfig) {
-				def poolFactory = entry.value.remove('pool')
+				def pf = entry.value.remove('pool')
+				cacheName = entry.key
 				"${entry.key}"(org.springframework.data.gemfire.CacheFactoryBean) {
-					properties = entry.value
+					properties = entry.value['properties'] ?: [:]
 				}
-				if(poolFactory) {
-					"${entry.key}Pool"(org.grails.plugins.gemfire.PoolFactoryBean) {
-						poolFactory = poolFactory
+				if(pf) {
+					poolName = "${entry.key}Pool"
+					"${entry.key}Pool"(org.grails.datastore.gorm.gemfire.config.PoolFactoryBean) {
+						poolFactory = pf
 					}					
 				}
 			}
 		}
 		else {
         	defaultGemfireCache(org.springframework.data.gemfire.CacheFactoryBean){}			
+			cacheName = "defaultGemfireCache"
 		}
 
 
@@ -73,7 +78,7 @@ data management platform.
                 def regionName = metadata.name
                 def regionAttributes = metadata.attributes
                 "${regionName}GemfireRegion"(org.springframework.data.gemfire.RegionFactoryBean) { bean ->
-					cache = ref("defaultGemfireCache")
+					cache = ref(cacheName)
                     name = regionName
                     if(regionAttributes) {
                         attributes = regionAttributes
@@ -100,8 +105,11 @@ data management platform.
           grailsApplication = ref('grailsApplication')
           pluginManager = ref('pluginManager')
         }
-        springDatastore(GemfireDatastoreFactoryBean) { bean ->
-		  bean.autowire = true
+        springDatastore(GemfireDatastoreFactoryBean) { 
+		  cache = ref(cacheName)
+		  if(poolName) {
+				pool = ref(poolName)
+		  }
           config = gemfireConfig
           mappingContext = ref("datastoreMappingContext")
           pluginManager = ref('pluginManager')

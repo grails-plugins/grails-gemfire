@@ -22,7 +22,7 @@ import org.codehaus.groovy.grails.plugins.GrailsPluginManager
 
 import org.grails.datastore.gorm.events.AutoTimestampInterceptor
 import org.grails.datastore.gorm.events.DomainEventInterceptor
-
+import com.gemstone.gemfire.cache.client.Pool;
 /**
  * Constructs a RedisDatastore instance
  *
@@ -35,14 +35,17 @@ class GemfireDatastoreFactoryBean implements FactoryBean<GemfireDatastore>{
   MappingContext mappingContext
   GrailsPluginManager pluginManager
   Cache cache
-
+  Pool pool
   GemfireDatastore getObject() {
     def datastore;
  	if(cache == null)
 		datastore = new GemfireDatastore(mappingContext, config)
 	else
 		datastore = new GemfireDatastore(mappingContext, cache)
-		
+	
+	if(pool) {
+		datastore.gemfirePool = pool
+	}	
     datastore.addEntityInterceptor(new DomainEventInterceptor())
     datastore.addEntityInterceptor(new AutoTimestampInterceptor())
 	datastore.afterPropertiesSet()

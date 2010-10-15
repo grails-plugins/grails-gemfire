@@ -1,6 +1,6 @@
 package org.grails.plugins.gemfire
 
-import com.gemstone.gemfire.cache.client.PoolManager
+import com.gemstone.gemfire.cache.client.*
 
 class CacheServerBuilder {
 	def servers = [:]
@@ -26,19 +26,19 @@ class CacheServerBuilder {
 	}
 	
 	def pool(Closure callable) {
-
-		currentPool = PoolManager.createFactory()
-		currentPool.metaClass.methodMissing = { String name, args
+		PoolFactory.metaClass.methodMissing = { String name, args
 			if(args) {
 				def mp = currentPool.metaClass.getMetaProperty(name)
 				if(mp) {
 					mp.setProperty(delegate, args[-1])
 					return null
 				}				
-			}			
+			}	
+			throw new MissingMethodException(name, PoolManager, arguments)		
 		}
-		callable.delegate = this
-		callable.resolveStrategy = Closure.DELEGATE_FIRST		
+		currentPool = PoolManager.createFactory()
+		callable.delegate = currentPool
+		callable.resolveStrategy = Closure.DELEGATE_ONLY		
 		servers[currentServer]['pool'] = currentPool
 		try {
 			callable.call()				
