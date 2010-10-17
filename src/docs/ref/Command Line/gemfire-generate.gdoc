@@ -1,0 +1,18 @@
+h1. gemfire-generate
+
+h2. Purpose
+
+Generates a cache.xml file for the current Grails configuration that an be used to start cache servers.
+
+h2. Examples
+
+Creates @target/cache.xml@:
+
+{code:java}
+$ grails gemfire-generate
+{code}
+
+h2. Description
+
+When using cache servers you'll need to setup an appropriate cache region configuration. This command will do that for you by generated a @target/cache.xml@ file (which you can copy to @grails-app/conf@ if you wish to customize it further).
+

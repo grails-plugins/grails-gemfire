@@ -1,0 +1,43 @@
+h1. start-cache-server
+
+h2. Purpose
+
+Starts a single cache server instance. 
+
+{note}
+Requires that Gemfire is installed and the GEMFIRE environment variable is set.
+{note}
+
+h2. Examples
+
+Starts a cache server on an automatically assigned port:
+
+{code:java}
+grails start-cache-server server1
+{code}
+
+Starts a cache server on port 4111 and disables multicast server discovery:
+
+{code:java}
+grails start-cache-server server1 --port=4111 --mcast-port=0
+{code}
+
+Starts a cache server on port 4111, disables multicast and uses the specified locator to locate other servers:
+
+{code:java}
+grails start-cache-server server1 --locators=localhost[4111] --port=4111 --mcast-port=0
+{code}
+
+
+h2. Description
+
+Usage:
+
+{code}
+$ grails start-cache-server [name] [--arguments]*
+{code}
+
+
+This command will start a single cache server if you want to use Gemfire in client/server mode. It will also setup the appropriate classpath for Gemfire and is typically used in combination with @gemfire-generate@ since it reads generated the @target/cache.xml@ to configure the server.
+
+If you plan to use multiple cache servers then you can do so use either multicast discovery or by specifying a locator server started using the @start-locator@ script.

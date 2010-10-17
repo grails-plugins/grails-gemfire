@@ -1,0 +1,28 @@
+h1. stop-cache-server
+
+h2. Purpose
+
+Stops a single cache server instance.
+
+{note}
+Requires that Gemfire is installed and the GEMFIRE environment variable is set.
+{note}
+
+
+h2. Examples
+
+Stops a cache server by name:
+
+{code:java}
+grails stop-cache-server server1
+{code}
+
+
+h2. Description
+
+Usage:
+
+{code}
+$ grails stop-cache-server [name] 
+{code}
+

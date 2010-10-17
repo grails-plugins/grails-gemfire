@@ -10,7 +10,7 @@
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
 
-grails.doc.authors = 'Jeff Brown'
+grails.doc.authors = 'Jeff Brown, Graeme Rocher'
 grails.doc.license = 'Apache License 2.0'
 grails.doc.title = 'GemFire Plugin'
 

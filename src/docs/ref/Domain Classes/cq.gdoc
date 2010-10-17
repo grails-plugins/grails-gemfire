@@ -1,0 +1,26 @@
+h1. cq
+
+h2. Purpose
+
+Enable the use of [continuous queries|guide:4.5 Continuous Queries] in Gemfire in GORM for Gemfire.
+
+h2. Examples
+
+{code:java}
+Person.cq.findAllByLastName("Flintstone") { event ->
+			println "GOT EVENT $event"
+}
+{code}
+
+h2. Description
+
+The syntax for executing a continuous query is as follows:
+
+{code}
+CLASS_NAME.cq.DYNAMIC_FINDER(ARGUMENTS, EVENT_HANDLER)
+{code}
+
+The last argument is a closure which acts as an event handler whenever a query result is found. The @event@ object is an instance of the "CqEvent":http://www.gemstone.com/docs/current/product/docs/japi/com/gemstone/gemfire/cache/query/CqEvent.html class.
+
+There are some limitations over normal queries. Refer to the "Gemfire documentation":http://www.gemstone.com/docs/6.5.0/product/docs/html/Manuals/DevelopersGuide/wwhelp/wwhimpl/common/html/wwhelp.htm#context=DevelopersGuide&file=ContinuousQuerying.15.1.html%231695614 on the subject for more information.
+

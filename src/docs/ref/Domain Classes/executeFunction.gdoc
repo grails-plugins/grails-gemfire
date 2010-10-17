@@ -1,0 +1,50 @@
+h1. executeFunction
+
+h2. Purpose
+
+Allows the execution of a function that is serialized to the node where the data exists and executed.
+
+h2. Examples
+
+Without a filter:
+
+{code:java}
+def results = Plant.executeFunction { ctx ->
+  ctx.lastResult ctx.localData[p.id]
+}
+{code}
+
+With a filter:
+
+{code}
+def results = Plant.executeFunction([1L]) { ctx ->
+  ctx.lastResult ctx.localData[ctx.filter.iterator().next()]
+}
+{code}
+
+
+h2. Description
+
+The @executeFunction@ method takes an optional filter and a closure to execute. The filter should be a list of domain class identifiers that the function should be executed on.
+
+The @ctx@ object passed to the function allows access to the local data stored on the node where the closure is being executing using the @localData@ property of the @ctx@.
+
+All the properties from the "RegionFunctionContext":http://www.gemstone.com/docs/current/product/docs/japi/com/gemstone/gemfire/cache/execute/RegionFunctionContext.html class are also available to the executing closure via the @ctx@ object.
+
+{warning}
+Node that the closure itself is serialized across the grid to the place of execution, this means that any local variables captured by the closure *must* also implement @Serializable@.
+{warning}
+
+The @ctx@ object also allows you to call the "ResultSender":http://www.gemstone.com/docs/current/product/docs/japi/com/gemstone/gemfire/cache/execute/ResultSender.html instance to send results back to the caller:
+
+{code}
+def results = Plant.executeFunction {
+	ctx.sendResult 1
+	ctx.lastResult 2
+}
+{code}
+
+Note that you can call the @sendResult@ multiple times, but you must end with calling the @lastResult@ method.
+
+Refer to the Gemfire documentation on "Function Execution":http://www.gemstone.com/docs/6.5.0/product/docs/html/Manuals/DevelopersGuide/wwhelp/wwhimpl/common/html/wwhelp.htm#context=DevelopersGuide&file=function_execution.17.1.html%231418150 for more information.
+

@@ -29,7 +29,7 @@ class GemfireGrailsPlugin {
             "**/.gitignore"
     ]
 
-    def author = "Jeff Brown"
+    def author = "Jeff Brown, Graeme Rocher"
     def authorEmail = "jeff.brown@springsource.com"
     def title = "Grails Gemfire Plugin"
     def description = '''\\

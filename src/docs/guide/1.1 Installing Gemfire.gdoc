@@ -1,0 +1,30 @@
+h4. Installing GemFire
+
+If you plan to use Gemfire only in peer-2-peer mode then you can skip this installation. If you want to use Gemfire in client/server mode then follow these instructions to install Gemfire:
+
+# Register at the "SpringSource GemFire download site":http://www.springsource.com/downloads/gemfire-evaluation-download to access the download.
+The registration process is quick and helps us help you later if you have questions or problems. The product includes an evaluation license.
+# Install GemFire Enterprise 6.5 according to the instructions on the download site. 
+You can also get GemFire from your salesperson.
+
+h4. Configure your environment for GemFire.
+
+# Set the @JAVA_HOME@ environment variable to point to your Java runtime installation. (There should be a bin directory under @JAVA_HOME@.)
+# Set the @GEMFIRE@ environment variable to point to your GemFire installation top-level directory. (There should be bin, lib, dtd, and other directories under GEMFIRE.)
+# Configure @GF_JAVA@ and your @PATH@ and @CLASSPATH@ as shown in these examples. (@GF_JAVA@ must point to the java executable file under your @JAVA_HOME@.)
+
+h4. Unix Bourne and Korn shells (sh, ksh, bash)
+
+{code}
+GF_JAVA=$JAVA_HOME/bin/java;export GF_JAVA
+PATH=$PATH:$JAVA_HOME/bin:$GEMFIRE/bin;export PATH
+CLASSPATH=$GEMFIRE/lib/gemfire.jar:$GEMFIRE/lib/antlr.jar:$GEMFIRE/lib/gfSecurityImpl.jar:$CLASSPATH;export CLASSPATH
+{code}
+
+h4. Windows
+
+{code}
+set GF_JAVA=%JAVA_HOME%\bin\java.exe
+set PATH=%PATH%;%JAVA_HOME%\bin;%GEMFIRE%\bin
+set CLASSPATH=%GEMFIRE%\lib\gemfire.jar;%GEMFIRE%\lib\antlr.jar;%GEMFIRE%\lib\gfSecurityImpl.jar;%CLASSPATH%
+{code}

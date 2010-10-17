@@ -1,0 +1,17 @@
+If you have both the Hibernate and Gemfire plugins installed then by default all classes in the @grails-app/domain@ directory will be persisted by Hibernate and not Gemfire. If you want to persist a particular domain class with Gemfire then you must use the @mapWith@ property in the domain class:
+
+{code:java}
+static mapWith = "gemfire"
+{code}
+
+Alternatively you can persist Hibernate entities to Gemfire using the special @gemfire@ scope added to all Hibernate entities:
+
+{code:java}
+def hibernatePerson = Person.get(1)
+
+hibernatePerson.gemfire.save()
+
+def redisPerson = Person.gemfire.get(1)
+{code}
+
+This makes it really easy to use Gemfire as a cache for Hibernate entities.

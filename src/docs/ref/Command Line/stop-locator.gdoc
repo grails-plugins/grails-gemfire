@@ -1,0 +1,29 @@
+h1. stop-locator
+
+h2. Purpose
+
+Stops the Gemfire locator server.
+
+{note}
+Requires that Gemfire is installed and the GEMFIRE environment variable is set.
+{note}
+
+
+h2. Examples
+
+Stops a locator running on the default 55221 port:
+
+{code:java}
+grails stop-locator
+{code}
+
+Stop a locator on port 4111:
+
+{code:java}
+grails stop-locator --port=4111
+{code}
+
+
+h2. Description
+
+If you wish to use multiple cache servers without multicast discovery then you'll need one or many locator servers. This command will stop a locator server for you.

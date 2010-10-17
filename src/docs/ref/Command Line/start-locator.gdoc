@@ -1,0 +1,29 @@
+h1. start-locator
+
+h2. Purpose
+
+Starts a Gemfire locator server.
+
+{note}
+Requires that Gemfire is installed and the GEMFIRE environment variable is set.
+{note}
+
+
+h2. Examples
+
+Starts a locator of the default 55221 port:
+
+{code:java}
+grails start-locator
+{code}
+
+Starts a locator on port 4111:
+
+{code:java}
+grails start-locator --port=4111
+{code}
+
+
+h2. Description
+
+If you wish to use multiple cache servers without multicast discovery then you'll need one or many locator servers. This command will start a locator server for you.

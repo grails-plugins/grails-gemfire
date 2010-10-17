@@ -7,7 +7,6 @@ grails.gemfire.servers = {
 		properties = ['log-level': 'warning']
 		pool {
 			addServer "localhost", 40404
-			// addLocator "localhost", 4111
 			minConnections 1
 			maxConnections 20
 			retryAttempts 10
@@ -16,3 +15,23 @@ grails.gemfire.servers = {
 	}
 }
 {code}
+
+The example above using a single cache server. If you plan to use multiple cache servers then you can specify one or many locators.
+
+{code}
+// grails-app/conf/Config.groovy
+grails.gemfire.servers = {    
+	myServer {
+		properties = ['log-level': 'warning']
+		pool {
+			addLocator "localhost", 4111
+			minConnections 1
+			maxConnections 20
+			retryAttempts 10
+			subscriptionEnabled true
+		}
+	}
+}
+{code}
+
+If you want to use continuous queries make sure that @subscriptionEnabled@ is set to true on the pool. For all the configuration options see the "PoolFactory":http://www.gemstone.com/docs/6.5.0/product/docs/japi/com/gemstone/gemfire/cache/client/class-use/PoolFactory.html API in the Gemfire documentation

@@ -1,22 +1,12 @@
-By using a client / server architecture you can unlock some of the nicer Gemfire features including:
+Gemfire supports a client / server mode for caching which can unlock some of the nicer Gemfire features including:
 
 * Grid computing
 * Continuous querying
 * Advanced data partitioning
 
-This plugin provides scripts to start up cache servers and locators. Typically you setup a locator first:
+In order to use client/server mode you need to [install gemfire|guide:1.1 Installing Gemfire] as per the documentation.
 
-{code:java}
-grails start-locator
-{code}
-
-This will start the locator on port 55221 by default. If you wish to start the locator service on a different port you can use:
-
-{code:java}
-grails start-locator --port=41111
-{code}
-
-A locator is responsible for looking up the location of cache servers. If you don't use a locator then the default multicast lookup will happen.
+This plugin provides scripts to start up cache servers and locators. 
 
 To startup cache servers you can use the @start-cache-server@ command. 
 
@@ -27,7 +17,7 @@ grails start-cache-server server1
 You can stop a server again using the @stop-cache-server@ command:
 
 {code:java}
-grails stop-cache-server server2
+grails stop-cache-server server1
 {code}
 
 The port of the server is automatically assigned. If you want to specify the port, locator server or multicast options there are more advanced arguments:
@@ -36,4 +26,19 @@ The port of the server is automatically assigned. If you want to specify the por
 grails start-cache-server server1 --locators=localhost[4111] --port=41112 --mcast-port=0
 {code}
 
-If the multicast port (mcast-port) option is set to 0 then multicast is disabled.
+If the multicast port (mcast-port) option is set to 0 then multicast is disabled. If you disable multicast then you will need to setup a locator server.
+
+You can setup a locator by running the @start-locator@ command:
+
+{code:java}
+grails start-locator
+{code}
+
+This will start the locator on port 55221 by default. If you wish to start the locator service on a different port you can use:
+
+{code:java}
+grails start-locator --port=4111
+{code}
+
+A locator is responsible for looking up the location of cache servers. If you don't use a locator then the default multicast lookup will happen.
+

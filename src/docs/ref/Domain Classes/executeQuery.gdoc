@@ -1,0 +1,18 @@
+h1. executeQuery
+
+h2. Purpose
+
+Executes an OQL query and returns the results.
+
+h2. Examples
+
+{code:java}
+    def results = Plant.executeQuery("goesInPatch = false")
+{code}
+
+{code}
+     def results = Plant.executeQuery('goesInPatch = $1', [false])
+{code}
+
+
+
