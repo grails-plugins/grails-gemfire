@@ -1,6 +1,6 @@
-Continuous queries are a feature of Gemfire that allows a client to subscribe the cache events using a query.
+Continuous queries are a feature of Gemfire that allows a client to subscribe to cache events using a query.
 
-To use continuous queries you need to have a [Cache Server|guide:3. Cache Servers] running with @subscriptionEnabled@ set to true (see the configuration in the previous section). Then simply use the @cq@ namespace to execute a dynamic finder that takes a closure:
+To use continuous queries you need to have a [Cache Server|guide:3. Cache Servers] running with @subscriptionEnabled@ set to @true@ (see the configuration in the previous section). Then simply use the @cq@ namespace to execute a dynamic finder that takes a closure:
 
 {code}
 Person.cq.findAllByLastName("Flintstone") { event ->
