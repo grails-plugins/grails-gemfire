@@ -41,7 +41,8 @@ data management platform.
     def documentation = "http://grails.org/plugin/gemfire"
 
     def doWithSpring = {
-		def servers = application.config.grails?.gemfire?.servers
+		def gemfireConfig = application.config.grails?.gemfire
+		def servers = gemfireConfig?.servers
 		def cacheName 
 		def poolName
 		if(servers instanceof Closure) {
@@ -61,7 +62,9 @@ data management platform.
 			}
 		}
 		else {
-        	defaultGemfireCache(org.springframework.data.gemfire.CacheFactoryBean){}			
+        	defaultGemfireCache(org.springframework.data.gemfire.CacheFactoryBean){
+				properties = ['log-level':gemfireConfig?.logLevel ?: 'warning']
+			}			
 			cacheName = "defaultGemfireCache"
 		}
 
@@ -92,7 +95,7 @@ data management platform.
                 }
             }
         }
-        def gemfireConfig = application.config?.grails?.gemfire?.config
+        def datastoreConfig = application.config?.grails?.gemfire?.datastore?.config
 
         def existingTransactionManager = manager?.hasGrailsPlugin("hibernate") || getSpringConfig().containsBean("transactionManager")
         def txManagerName = existingTransactionManager ? 'datastoreTransactionManager' : 'transactionManager'
@@ -110,7 +113,7 @@ data management platform.
 		  if(poolName) {
 				pool = ref(poolName)
 		  }
-          config = gemfireConfig
+          config = datastoreConfig
           mappingContext = ref("datastoreMappingContext")
           pluginManager = ref('pluginManager')
         }
