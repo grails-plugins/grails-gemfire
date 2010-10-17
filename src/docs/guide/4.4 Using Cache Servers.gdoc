@@ -6,7 +6,7 @@ The Gemfire plugin for Grails will handle both of these cases for you. First to 
 $ grails gemfire-generate
 {code}
 
-This will create a @target/cache.xml@ file with regions that much you the GORM entities you have created.
+This will create a @target/cache.xml@ file with regions that match the GORM entities you have created.
 
 With this done you can start a cache server with the @start-cache-server@ command:
 

@@ -1,4 +1,4 @@
-GORM for Gemfire does not support string-based HQL queries (which are specific to Hiberate) instead you can execute OQL queries:
+GORM for Gemfire does not support string-based HQL queries (which are specific to Hibernate) instead you can execute OQL queries:
 
 {code}
 def results = Plant.findAll("goesInPatch = false", [sort:'name'])
