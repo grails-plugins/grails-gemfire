@@ -19,7 +19,7 @@ target(main: "Starts the Gemfire locator service") {
 			arg value:"start-locator"
 			arg value:"-port=$port"			
 		}		
-		println "Started Gemfire Locator Service"		
+		println "Started Gemfire Locator Service on port $port"		
 	}
 }
 
