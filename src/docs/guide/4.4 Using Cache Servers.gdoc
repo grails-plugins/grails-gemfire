@@ -25,10 +25,10 @@ grails.gemfire.servers = {
 		properties = ['log-level': 'warning']
 		pool {
 			addServer "localhost", 4111
-			minConnections 1
-			maxConnections 20
-			retryAttempts 10
-			subscriptionEnabled true
+			setMinConnections 1
+			setMaxConnections 20
+			setRetryAttempts 10
+			setSubscriptionEnabled true
 		}
 	}
 }

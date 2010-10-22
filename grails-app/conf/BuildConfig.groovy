@@ -16,8 +16,7 @@ grails.project.dependency.resolution = {
         mavenCentral()
 
         mavenRepo 'http://maven.springframework.org/milestone'
-        mavenRepo 'http://maven.springframework.org/snapshot'
-		mavenRepo "http://snapshots.repository.codehaus.org"
+        mavenRepo 'http://repository.codehaus.org'
         mavenRepo 'http://dist.gemstone.com/maven/release'
     }
     dependencies {
@@ -36,10 +35,10 @@ grails.project.dependency.resolution = {
 	        excludes "slf4j-simple", "persistence-api", "commons-logging", "jcl-over-slf4j", "slf4j-api", "jta"
 	        excludes "spring-core", "spring-beans", "spring-aop", "spring-tx", "spring-context", "spring-web"
 	    }
-      	compile("org.grails:grails-datastore-gorm:1.0.0.BUILD-SNAPSHOT", excludes)	
-      	compile("org.grails:grails-datastore-gorm-gemfire:1.0.0.BUILD-SNAPSHOT", excludes)
-      	compile( "org.springframework:spring-datastore-web:1.0.0.BUILD-SNAPSHOT", excludes)
-      	test("org.grails:grails-datastore-gorm-test:1.0.0.BUILD-SNAPSHOT", excludes)
+      	compile("org.grails:grails-datastore-gorm:1.0.0.M2", excludes)	
+      	compile("org.grails:grails-datastore-gorm-gemfire:1.0.0.M2", excludes)
+      	compile( "org.springframework:spring-datastore-web:1.0.0.M2", excludes)
+      	test("org.grails:grails-datastore-gorm-test:1.0.0.M2", excludes)
 
     }
 }
