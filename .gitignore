@@ -4,3 +4,4 @@ grails-gemfire-*.zip
 stacktrace.log
 target
 
+.DS_Store
