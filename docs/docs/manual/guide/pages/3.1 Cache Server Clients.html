@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <title>3.1 Cache Server Clients</title>
+        <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" title="Ref" charset="utf-8"/>
+    </head>
+    <body class="body">
+    Once you have some cache servers up and running you need to configure the Grails application to act as a client to the servers.<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy
+grails.gemfire.servers = &#123;    
+	myServer &#123;
+		properties = &#91;'log&#45;level': 'warning'&#93;
+		pool &#123;
+			addServer <span class="java&#45;quote">"localhost"</span>, 4111
+			setMinConnections 1
+			setMaxConnections 20
+			setRetryAttempts 10
+			setSubscriptionEnabled <span class="java&#45;keyword">true</span>
+		&#125;
+	&#125;
+&#125;</pre></div><p class="paragraph"/>The example above using a single cache server. If you plan to use multiple cache servers then you can specify one or many locators.<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy
+grails.gemfire.servers = &#123;    
+	myServer &#123;
+		properties = &#91;'log&#45;level': 'warning'&#93;
+		pool &#123;
+			addLocator <span class="java&#45;quote">"localhost"</span>, 4111
+			setMinConnections 1
+			setMaxConnections 20
+			setRetryAttempts 10
+			setSubscriptionEnabled <span class="java&#45;keyword">true</span>
+		&#125;
+	&#125;
+&#125;</pre></div><p class="paragraph"/>If you want to use continuous queries make sure that <code>subscriptionEnabled</code> is set to true on the pool. For all the configuration options see the <a href="http://www.gemstone.com/docs/6.5.0/product/docs/japi/com/gemstone/gemfire/cache/client/class-use/PoolFactory.html" target="blank">PoolFactory</a> API in the Gemfire documentation
+    </body>
+</html>

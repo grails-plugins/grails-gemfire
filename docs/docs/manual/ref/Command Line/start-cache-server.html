@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <title>GemFire Plugin 1.0.0.M1 - Reference Documentation</title>
+        <link rel="stylesheet" href="../../css/ref.css" type="text/css" media="screen" title="Ref" charset="utf-8"/>
+    </head>
+    <body class="body">
+    <h1>start-cache-server</h1><p class="paragraph"/><h2>Purpose</h2><p class="paragraph"/>Starts a single cache server instance.<p class="paragraph"/><blockquote class="note">
+Requires that Gemfire is installed and the GEMFIRE environment variable is set.
+</blockquote><p class="paragraph"/><h2>Examples</h2><p class="paragraph"/>Starts a cache server on an automatically assigned port:<p class="paragraph"/><div class="code"><pre>grails start&#45;cache&#45;server server1</pre></div><p class="paragraph"/>Starts a cache server on port 4111 and disables multicast server discovery:<p class="paragraph"/><div class="code"><pre>grails start&#45;cache&#45;server server1 &#45;&#45;port=4111 &#45;&#45;mcast&#45;port=0</pre></div><p class="paragraph"/>Starts a cache server on port 4111, disables multicast and uses the specified locator to locate other servers:<p class="paragraph"/><div class="code"><pre>grails start&#45;cache&#45;server server1 &#45;&#45;locators=localhost&#91;4111&#93; &#45;&#45;port=4111 &#45;&#45;mcast&#45;port=0</pre></div><p class="paragraph"/>
+<h2>Description</h2><p class="paragraph"/>Usage:<p class="paragraph"/><div class="code"><pre>$ grails start&#45;cache&#45;server &#91;name&#93; &#91;&#45;&#45;arguments&#93;&#42;</pre></div><p class="paragraph"/>
+This command will start a single cache server if you want to use Gemfire in client/server mode. It will also setup the appropriate classpath for Gemfire and is typically used in combination with <code>gemfire-generate</code> since it reads generated the <code>target/cache.xml</code> to configure the server.<p class="paragraph"/>If you plan to use multiple cache servers then you can do so use either multicast discovery or by specifying a locator server started using the <code>start-locator</code> script.
+
+    </body>
+</html>
