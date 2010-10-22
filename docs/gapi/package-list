@@ -1,2 +1,2 @@
 DefaultPackage
-org.grails.gemfire
+org.grails.plugins.gemfire

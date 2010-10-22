@@ -1,6 +1,7 @@
 <html>
     <head>
-        <title>GemFire Plugin 0.1.M2 - Reference Documentation</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>GemFire Plugin 1.0.0.M1 - Reference Documentation</title>
         <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" title="Style" charset="utf-8"/>
         <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
     </head>
@@ -15,20 +16,36 @@
             </div>
             <div class="message">gemfire</div>
             <h1>GemFire Plugin - Reference Documentation</h1>
-            <p><strong>Authors:</strong> Jeff Brown</p>
-            <p><strong>Version:</strong> 0.1.M2</p>
+            <p><strong>Authors:</strong> Jeff Brown, Graeme Rocher</p>
+            <p><strong>Version:</strong> 1.0.0.M1</p>
             <em></em>
         </div>
 
         <div id="toc">
             <h2>Table of Contents</h2>
-            <div class="tocItem" style="margin-left:0px"><a href="#1. Introduction To The GemFire Plugin">1. Introduction To The GemFire Plugin</a></div><div class="tocItem" style="margin-left:0px"><a href="#2. Cache Regions">2. Cache Regions</a></div><div class="tocItem" style="margin-left:10px"><a href="#2.1 Cache Region Configuration">2.1 Cache Region Configuration</a></div><div class="tocItem" style="margin-left:10px"><a href="#2.2 Accesing Cache Regions">2.2 Accesing Cache Regions</a></div>
+            <div class="tocItem" style="margin-left:0px"><a href="#1. Introduction To The GemFire Plugin">1. Introduction To The GemFire Plugin</a></div><div class="tocItem" style="margin-left:10px"><a href="#1.1 Installing Gemfire">1.1 Installing Gemfire</a></div><div class="tocItem" style="margin-left:0px"><a href="#2. Cache Regions">2. Cache Regions</a></div><div class="tocItem" style="margin-left:10px"><a href="#2.1 Cache Region Configuration">2.1 Cache Region Configuration</a></div><div class="tocItem" style="margin-left:10px"><a href="#2.2 Accesing Cache Regions">2.2 Accesing Cache Regions</a></div><div class="tocItem" style="margin-left:0px"><a href="#3. Cache Servers">3. Cache Servers</a></div><div class="tocItem" style="margin-left:10px"><a href="#3.1 Cache Server Clients">3.1 Cache Server Clients</a></div><div class="tocItem" style="margin-left:0px"><a href="#4. GORM for Gemfire">4. GORM for Gemfire</a></div><div class="tocItem" style="margin-left:10px"><a href="#4.1 Getting Started">4.1 Getting Started</a></div><div class="tocItem" style="margin-left:10px"><a href="#4.2 Combining Hibernate and Gemfire">4.2 Combining Hibernate and Gemfire</a></div><div class="tocItem" style="margin-left:10px"><a href="#4.3 Mapping Entities to Regions">4.3 Mapping Entities to Regions</a></div><div class="tocItem" style="margin-left:10px"><a href="#4.4 Using Cache Servers">4.4 Using Cache Servers</a></div><div class="tocItem" style="margin-left:10px"><a href="#4.5 Continuous Queries">4.5 Continuous Queries</a></div><div class="tocItem" style="margin-left:10px"><a href="#4.6 Grid Computing">4.6 Grid Computing</a></div><div class="tocItem" style="margin-left:10px"><a href="#4.7 OQL Queries">4.7 OQL Queries</a></div>
         </div>
         <div id="content">
             <h1><a name="1. Introduction To The GemFire Plugin">1. Introduction To The GemFire Plugin</a></h1>The GemFire plugin provides integration with the GemFire in-memory distributed
 data management platform.<p class="paragraph"/>This user guide describes details on configuring and using GemFire specifically 
 in the context of a Grails application.  Complete documentation on GemFire is
 available at <a href="http://www.gemstone.com/products/gemfire" target="blank">http://www.gemstone.com/products/gemfire</a>.
+<h2><a name="1.1 Installing Gemfire">1.1 Installing Gemfire</a></h2><h4>Installing GemFire</h4><p class="paragraph"/>If you plan to use Gemfire only in peer-2-peer mode then you can skip this installation. If you want to use Gemfire in client/server mode then follow these instructions to install Gemfire:
+<ol>
+<li>Register at the <a href="http://www.springsource.com/downloads/gemfire-evaluation-download" target="blank">SpringSource GemFire download site</a> to access the download.</li>
+</ol><p class="paragraph"/>The registration process is quick and helps us help you later if you have questions or problems. The product includes an evaluation license.
+<ol>
+<li>Install GemFire Enterprise 6.5 according to the instructions on the download site.</li>
+</ol><p class="paragraph"/>You can also get GemFire from your salesperson.<p class="paragraph"/><h4>Configure your environment for GemFire.</h4>
+<ol>
+<li>Set the <code>JAVA_HOME</code> environment variable to point to your Java runtime installation. (There should be a bin directory under <code>JAVA_HOME</code>.)</li>
+<li>Set the <code>GEMFIRE</code> environment variable to point to your GemFire installation top-level directory. (There should be bin, lib, dtd, and other directories under GEMFIRE.)</li>
+<li>Configure <code>GF_JAVA</code> and your <code>PATH</code> and <code>CLASSPATH</code> as shown in these examples. (<code>GF_JAVA</code> must point to the java executable file under your <code>JAVA_HOME</code>.)</li>
+</ol><p class="paragraph"/><h4>Unix Bourne and Korn shells (sh, ksh, bash)</h4><p class="paragraph"/><div class="code"><pre>GF_JAVA=$JAVA_HOME/bin/java;export GF_JAVA
+PATH=$PATH:$JAVA_HOME/bin:$GEMFIRE/bin;export PATH
+CLASSPATH=$GEMFIRE/lib/gemfire.jar:$GEMFIRE/lib/antlr.jar:$GEMFIRE/lib/gfSecurityImpl.jar:$CLASSPATH;export CLASSPATH</pre></div><p class="paragraph"/><h4>Windows</h4><p class="paragraph"/><div class="code"><pre>set GF_JAVA=%JAVA_HOME%&#98;in&#106;ava.exe
+set PATH=%PATH%;%JAVA_HOME%&#98;in;%GEMFIRE%&#98;in
+set CLASSPATH=%GEMFIRE%&#108;ib&#103;emfire.jar;%GEMFIRE%&#108;ib&#97;ntlr.jar;%GEMFIRE%&#108;ib&#103;fSecurityImpl.jar;%CLASSPATH%</pre></div>
 <h1><a name="2. Cache Regions">2. Cache Regions</a></h1>GemFire allows your data to be organized within a cache using data regions.  The
 Grails GemFire plugin provides a DSL for describing the regions available to
 the application and provides a simple convention based approach to accessing
@@ -81,7 +98,80 @@ of key value pairs.<p class="paragraph"/>If a region were configured like this:<
         def value = params.value
         departmentData&#91;key&#93; = value<p class="paragraph"/>        redirect action: 'list'
     &#125;<p class="paragraph"/>    // &#8230;
-&#125;</pre></div><p class="paragraph"/><p class="paragraph"/><p class="paragraph"/>
+&#125;</pre></div><p class="paragraph"/><p class="paragraph"/><p class="paragraph"/><h1><a name="3. Cache Servers">3. Cache Servers</a></h1>Gemfire supports a client / server mode for caching which can unlock some of the nicer Gemfire features including:
+<ul class="star">
+<li>Grid computing</li>
+<li>Continuous querying</li>
+<li>Advanced data partitioning</li>
+</ul><p class="paragraph"/>In order to use client/server mode you need to <a href="../guide/single.html#1.1 Installing Gemfire" class="guide">install gemfire</a> as per the documentation.<p class="paragraph"/>This plugin provides scripts to start up cache servers and locators.<p class="paragraph"/>To startup cache servers you can use the <code>start-cache-server</code> command.<p class="paragraph"/><div class="code"><pre>grails start&#45;cache&#45;server server1</pre></div><p class="paragraph"/>You can stop a server again using the <code>stop-cache-server</code> command:<p class="paragraph"/><div class="code"><pre>grails stop&#45;cache&#45;server server1</pre></div><p class="paragraph"/>The port of the server is automatically assigned. If you want to specify the port, locator server or multicast options there are more advanced arguments:<p class="paragraph"/><div class="code"><pre>grails start&#45;cache&#45;server server1 &#45;&#45;locators=localhost&#91;4111&#93; &#45;&#45;port=41112 &#45;&#45;mcast&#45;port=0</pre></div><p class="paragraph"/>If the multicast port (mcast-port) option is set to 0 then multicast is disabled. If you disable multicast then you will need to setup a locator server.<p class="paragraph"/>You can setup a locator by running the <code>start-locator</code> command:<p class="paragraph"/><div class="code"><pre>grails start&#45;locator</pre></div><p class="paragraph"/>This will start the locator on port 55221 by default. If you wish to start the locator service on a different port you can use:<p class="paragraph"/><div class="code"><pre>grails start&#45;locator &#45;&#45;port=4111</pre></div><p class="paragraph"/>A locator is responsible for looking up the location of cache servers. If you don't use a locator then the default multicast lookup will happen.<p class="paragraph"/><h2><a name="3.1 Cache Server Clients">3.1 Cache Server Clients</a></h2>Once you have some cache servers up and running you need to configure the Grails application to act as a client to the servers.<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy
+grails.gemfire.servers = &#123;    
+	myServer &#123;
+		properties = &#91;'log&#45;level': 'warning'&#93;
+		pool &#123;
+			addServer <span class="java&#45;quote">"localhost"</span>, 4111
+			setMinConnections 1
+			setMaxConnections 20
+			setRetryAttempts 10
+			setSubscriptionEnabled <span class="java&#45;keyword">true</span>
+		&#125;
+	&#125;
+&#125;</pre></div><p class="paragraph"/>The example above using a single cache server. If you plan to use multiple cache servers then you can specify one or many locators.<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy
+grails.gemfire.servers = &#123;    
+	myServer &#123;
+		properties = &#91;'log&#45;level': 'warning'&#93;
+		pool &#123;
+			addLocator <span class="java&#45;quote">"localhost"</span>, 4111
+			setMinConnections 1
+			setMaxConnections 20
+			setRetryAttempts 10
+			setSubscriptionEnabled <span class="java&#45;keyword">true</span>
+		&#125;
+	&#125;
+&#125;</pre></div><p class="paragraph"/>If you want to use continuous queries make sure that <code>subscriptionEnabled</code> is set to true on the pool. For all the configuration options see the <a href="http://www.gemstone.com/docs/6.5.0/product/docs/japi/com/gemstone/gemfire/cache/client/class-use/PoolFactory.html" target="blank">PoolFactory</a> API in the Gemfire documentation<h1><a name="4. GORM for Gemfire">4. GORM for Gemfire</a></h1>The Gemfire plugin for Grails allows you to map GORM entities onto Gemfire.<p class="paragraph"/>The following key features are supported by GORM for Gemfire:
+<ul class="star">
+<li>Simple persistence methods</li>
+<li>Dynamic finders</li>
+<li>Criteria queries</li>
+<li>Named queries</li>
+<li>Inheritance</li>
+</ul><p class="paragraph"/>However, some features are not supported:
+<ul class="star">
+<li>HQL queries (Gemfire OQL is supported however)</li>
+<li>Dirty checking methods</li>
+<li>Composite primary keys</li>
+<li>Many-to-many associations (these can be modelled with a mapping class)</li>
+<li>Any direct interaction with the Hibernate API</li>
+<li>Custom Hibernate user types</li>
+</ul><p class="paragraph"/><h2><a name="4.1 Getting Started">4.1 Getting Started</a></h2>If you plan to use Gemfire as your primary datastore then you need to uninstall the Hibernate plugin:<p class="paragraph"/><div class="code"><pre>grails uninstall&#45;plugin hibernate</pre></div><p class="paragraph"/>With this done all domain classes in grails-app/domain will be persisted via Gemfire and not Hibernate. You can create a domain class by running the regular <code>create-domain-class</code> command:<p class="paragraph"/><div class="code"><pre>grails create&#45;domain&#45;class Person</pre></div><p class="paragraph"/>With that done you need to make sure your <code>Person</code> domain class implements the <code>Serializable</code> interface:<p class="paragraph"/><div class="code"><pre>class Person <span class="java&#45;keyword">implements</span> Serializable &#123;<p class="paragraph"/>&#125;</pre></div><p class="paragraph"/>The <code>Person</code> domain class will automatically be a persistent entity that can be stored in Gemfire.<h2><a name="4.2 Combining Hibernate and Gemfire">4.2 Combining Hibernate and Gemfire</a></h2>If you have both the Hibernate and Gemfire plugins installed then by default all classes in the <code>grails-app/domain</code> directory will be persisted by Hibernate and not Gemfire. If you want to persist a particular domain class with Gemfire then you must use the <code>mapWith</code> property in the domain class:<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">static</span> mapWith = <span class="java&#45;quote">"gemfire"</span></pre></div><p class="paragraph"/>Alternatively you can persist Hibernate entities to Gemfire using the special <code>gemfire</code> scope added to all Hibernate entities:<p class="paragraph"/><div class="code"><pre>def hibernatePerson = Person.get(1)<p class="paragraph"/>hibernatePerson.gemfire.save()<p class="paragraph"/>def redisPerson = Person.gemfire.get(1)</pre></div><p class="paragraph"/>This makes it really easy to use Gemfire as a cache for Hibernate entities.<h2><a name="4.3 Mapping Entities to Regions">4.3 Mapping Entities to Regions</a></h2>GORM for Gemfire maps each domain class to a Gemfire region in the configured cache. You can configure the attributes of the region using the static mapping block:<p class="paragraph"/><div class="code"><pre>class Person <span class="java&#45;keyword">implements</span> Serializable &#123;
+  <span class="java&#45;object">String</span> name<p class="paragraph"/>  <span class="java&#45;keyword">static</span> mapping = &#123;
+    dataPolicy DataPolicy.PARTITION
+    region <span class="java&#45;quote">"people"</span>
+  &#125;
+&#125;</pre></div><p class="paragraph"/>The available configuration options can be found in the API of the <a href="http://www.gemstone.com/docs/current/product/docs/japi/com/gemstone/gemfire/cache/AttributesFactory.html" target="blank">AttributesFactory</a> class. For example the <code>dataPolicy</code> setting specific in the above examples maps to the <code>setDataPolicy</code> method of the <code>AttributesFactory</code> class.
+<h2><a name="4.4 Using Cache Servers">4.4 Using Cache Servers</a></h2>A described in the section on <a href="../guide/single.html#3. Cache Servers" class="guide">cache servers</a>, you can setup Gemfire in client / server mode, however to do so with GORM entities the server needs to know about the regions and also needs to have all the necessary classes on the classpath.<p class="paragraph"/>The Gemfire plugin for Grails will handle both of these cases for you. First to setup an appropriate server configuration you should run in the <code>gemfire-generate</code> command:<p class="paragraph"/><div class="code"><pre>$ grails gemfire&#45;generate</pre></div><p class="paragraph"/>This will create a <code>target/cache.xml</code> file with regions that match the GORM entities you have created.<p class="paragraph"/>With this done you can start a cache server with the <code>start-cache-server</code> command:<p class="paragraph"/><div class="code"><pre>$ grails start&#45;cache&#45;server server1 &#45;&#45;port=4111</pre></div><p class="paragraph"/>The <code>start-cache-server</code> command will check for the existence of a <code>grails-app/conf/cache.xml</code> or the generated <code>target/cache.xml</code> file. This allows you to make customizations to the generated file if necessary.<p class="paragraph"/>The <code>start-cache-server</code> command will also make sure that the classes in your Grails application are visible on the cache server. Once you have the cache server up and running you need to configure your Grails application to use the server by adding the following to <code>grails-app/conf/Config.groovy</code>:<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy
+grails.gemfire.servers = &#123;    
+	myServer &#123;
+		properties = &#91;'log&#45;level': 'warning'&#93;
+		pool &#123;
+			addServer <span class="java&#45;quote">"localhost"</span>, 4111
+			setMinConnections 1
+			setMaxConnections 20
+			setRetryAttempts 10
+			setSubscriptionEnabled <span class="java&#45;keyword">true</span>
+		&#125;
+	&#125;
+&#125;</pre></div><h2><a name="4.5 Continuous Queries">4.5 Continuous Queries</a></h2>Continuous queries are a feature of Gemfire that allows a client to subscribe to cache events using a query.<p class="paragraph"/>To use continuous queries you need to have a <a href="../guide/single.html#3. Cache Servers" class="guide">Cache Server</a> running with <code>subscriptionEnabled</code> set to <code>true</code> (see the configuration in the previous section). Then simply use the <code>cq</code> namespace to execute a dynamic finder that takes a closure:<p class="paragraph"/><div class="code"><pre>Person.cq.findAllByLastName(<span class="java&#45;quote">"Flintstone"</span>) &#123; event &#45;&#62;
+			println <span class="java&#45;quote">"GOT EVENT $event"</span>
+&#125;</pre></div><p class="paragraph"/>The above will execute a continuous query that fires every time a <code>Person</code> with the surname "Flinstone" is inserted or updated in the cache. The <code>event</code> object is an instance of <a href="http://www.gemstone.com/docs/current/product/docs/japi/com/gemstone/gemfire/cache/query/CqEvent.html" target="blank">CqEvent</a> which contains methods to get the value and the operation that triggered the event.<p class="paragraph"/>Typically you would write an event handler that checks if an exception was thrown:<p class="paragraph"/>
+<div class="code"><pre>Person.cq.findAllByLastName(<span class="java&#45;quote">"Flintstone"</span>) &#123; event &#45;&#62;
+	<span class="java&#45;keyword">if</span>(!event.throwable) &#123;
+		println <span class="java&#45;quote">"NEW FLINSTONE $&#123;event.newValue.firstName&#125;"</span>
+	&#125;<p class="paragraph"/>&#125;</pre></div><p class="paragraph"/>
+<h2><a name="4.6 Grid Computing">4.6 Grid Computing</a></h2>Using a partitioned topology Gemfire will store a primary version of an entity on one node and a backup on another node. This means that a particular entity might be stored on a completely different machine to where the client is running.<p class="paragraph"/>You may want to execute some logic that manipulates the primary version of an entity. This is where Gemfire's function execution functionality comes in handy.<p class="paragraph"/>For example say you save an entity on one node in the Grid:<p class="paragraph"/><div class="code"><pre>def p = <span class="java&#45;keyword">new</span> Plant(name:<span class="java&#45;quote">"cabbage"</span>, goesInPatch:<span class="java&#45;keyword">true</span>).save()</pre></div><p class="paragraph"/>You can later execute a function that operates on the local data where the node is stored using the <code>executeFunction</code> method:<p class="paragraph"/><div class="code"><pre>def results = Plant.executeFunction(&#91;p.id&#93;) &#123; ctx &#45;&#62;
+  ctx.lastResult ctx.localData&#91;ctx.filter.iterator().next()&#93;
+&#125;
+assert results&#91;0&#93;.name == 'cabbage'</pre></div><p class="paragraph"/>The <code>executeFunction</code> method takes a <code>List</code> (which acts as a filter to specify which entities you want to execute the function for) and a closure which is the function to execute.<p class="paragraph"/>What actually happens is the Groovy closure is serialized across the grid and executed on the node where the data exists. The <code>ctx.localData</code> variable gives you access to the data stored locally on the node.<p class="paragraph"/>In this example we're just returning the data from the function as part of the execution by calling the <code>lastResult</code> method on the <a href="http://www.gemstone.com/docs/current/product/docs/japi/com/gemstone/gemfire/cache/execute/RegionFunctionContext.html" target="blank">FunctionContext</a> which relays to the <a href="http://www.gemstone.com/docs/current/product/docs/japi/com/gemstone/gemfire/cache/execute/ResultSender.html" target="blank">ResultSender</a><p class="paragraph"/>
+Using this mechanism you can implement typical grid computing patterns such as Map/Reduce.<p class="paragraph"/><h2><a name="4.7 OQL Queries">4.7 OQL Queries</a></h2>GORM for Gemfire does not support string-based HQL queries (which are specific to Hibernate) instead you can execute OQL queries:<p class="paragraph"/><div class="code"><pre>def results = Plant.findAll(<span class="java&#45;quote">"goesInPatch = <span class="java&#45;keyword">false</span>"</span>, &#91;sort:'name'&#93;)</pre></div><p class="paragraph"/>Or<p class="paragraph"/><div class="code"><pre>def result = Plant.find('name = $1', &#91;'rose'&#93;)</pre></div><p class="paragraph"/>See section of the <a href="http://www.gemstone.com/docs/current/product/docs/html/Manuals/DevelopersGuide/wwhelp/wwhimpl/common/html/wwhelp.htm#context=DevelopersGuide&#38;file=Querying.14.1.html%231295271" target="blank">Gemfire Query Language</a> for more information.
         </div>
         <div id="footer">
              
