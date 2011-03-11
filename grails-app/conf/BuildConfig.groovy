@@ -24,10 +24,10 @@ grails.project.dependency.resolution = {
 
         // runtime 'mysql:mysql-connector-java:5.1.5'
         
-        compile('org.springframework.data.gemfire:spring-gemfire:1.0.0.M1') {
+        compile('org.springframework.data.gemfire:spring-gemfire:1.0.0.RELEASE') {
             excludes 'spring-context', 'spring-tx'
         }
-        compile('com.gemstone.gemfire:gemfire:6.0.1.A') {
+        compile('com.gemstone.gemfire:gemfire:6.5.1.A') {
             excludes 'antlr'
         }
 
