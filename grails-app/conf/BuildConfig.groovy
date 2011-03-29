@@ -27,7 +27,7 @@ grails.project.dependency.resolution = {
         compile('org.springframework.data.gemfire:spring-gemfire:1.0.0.RELEASE') {
             excludes 'spring-context', 'spring-tx'
         }
-        compile('com.gemstone.gemfire:gemfire:6.5.1.A') {
+        compile('com.gemstone.gemfire:gemfire:6.5.1.2') {
             excludes 'antlr'
         }
 
