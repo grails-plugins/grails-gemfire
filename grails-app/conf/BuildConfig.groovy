@@ -16,7 +16,6 @@ grails.project.dependency.resolution = {
         mavenCentral()
 
         mavenRepo 'http://maven.springframework.org/milestone'
-        mavenRepo 'http://repository.codehaus.org'
         mavenRepo 'http://dist.gemstone.com/maven/release'
     }
     dependencies {
