@@ -17,13 +17,16 @@ grails.project.dependency.resolution = {
 
         mavenRepo 'http://maven.springframework.org/milestone'
         mavenRepo 'http://dist.gemstone.com/maven/release'
+        
+        // temporary, for spring-gemfire 1.0.1.BUILD-SNAPSHOT
+        mavenRepo 'http://maven.springframework.org/snapshot'
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
         // runtime 'mysql:mysql-connector-java:5.1.5'
         
-        compile('org.springframework.data.gemfire:spring-gemfire:1.0.0.RELEASE') {
+        compile('org.springframework.data.gemfire:spring-gemfire:1.0.1.BUILD-SNAPSHOT') {
             excludes 'spring-context', 'spring-tx'
         }
         compile('com.gemstone.gemfire:gemfire:6.5.1.2') {
