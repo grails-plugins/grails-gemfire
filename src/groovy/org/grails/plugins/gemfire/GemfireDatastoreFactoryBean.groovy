@@ -14,40 +14,42 @@
  */
 package org.grails.plugins.gemfire
 
+import com.gemstone.gemfire.cache.*
+import com.gemstone.gemfire.cache.client.Pool
+import org.codehaus.groovy.grails.plugins.GrailsPluginManager
 import org.springframework.beans.factory.FactoryBean
+import org.springframework.context.ApplicationContext
+import org.springframework.context.ApplicationContextAware
+import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.datastore.mapping.gemfire.GemfireDatastore
 import org.springframework.datastore.mapping.model.MappingContext
-import com.gemstone.gemfire.cache.*
-import org.codehaus.groovy.grails.plugins.GrailsPluginManager
 
-import org.grails.datastore.gorm.events.AutoTimestampInterceptor
-import org.grails.datastore.gorm.events.DomainEventInterceptor
-import com.gemstone.gemfire.cache.client.Pool;
 /**
  * Constructs a RedisDatastore instance
  *
  * @author Graeme Rocher
  * @since 1.0
  */
-class GemfireDatastoreFactoryBean implements FactoryBean<GemfireDatastore>{
+class GemfireDatastoreFactoryBean implements FactoryBean<GemfireDatastore>, ApplicationContextAware {
 
   Map<String, String> config
   MappingContext mappingContext
   GrailsPluginManager pluginManager
   Cache cache
   Pool pool
+  ApplicationContext applicationContext
+  
   GemfireDatastore getObject() {
     def datastore;
  	if(cache == null)
-		datastore = new GemfireDatastore(mappingContext, config)
+		datastore = new GemfireDatastore(mappingContext, config, (ConfigurableApplicationContext)applicationContext)
 	else
-		datastore = new GemfireDatastore(mappingContext, cache)
+		datastore = new GemfireDatastore(mappingContext, cache, (ConfigurableApplicationContext)applicationContext)
 	
 	if(pool) {
 		datastore.gemfirePool = pool
 	}	
-    datastore.addEntityInterceptor(new DomainEventInterceptor())
-    datastore.addEntityInterceptor(new AutoTimestampInterceptor())
+
 	datastore.afterPropertiesSet()
 
     return datastore

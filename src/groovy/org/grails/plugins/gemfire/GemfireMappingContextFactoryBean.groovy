@@ -15,7 +15,7 @@
 package org.grails.plugins.gemfire
 
 import org.grails.datastore.gorm.bean.factory.AbstractMappingContextFactoryBean
-import org.springframework.datastore.mapping.keyvalue.mapping.KeyValueMappingContext
+import org.springframework.datastore.mapping.keyvalue.mapping.config.KeyValueMappingContext
 import org.springframework.datastore.mapping.model.MappingContext
 import org.springframework.datastore.mapping.gemfire.config.*
 /**
