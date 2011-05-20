@@ -154,7 +154,7 @@ data management platform.
             enhancer.enhance(entity)
           }
           else {
-            def staticApi = new GemfireStaticApi(cls, datastore)
+            def staticApi = new GemfireStaticApi(cls, datastore, enhancer.finders)
             def instanceApi = new GormInstanceApi(cls, datastore)
             cls.metaClass.static.getGemfire = {-> staticApi }
             cls.metaClass.getGemfire = {-> new InstanceProxy(instance:delegate, target:instanceApi) }
