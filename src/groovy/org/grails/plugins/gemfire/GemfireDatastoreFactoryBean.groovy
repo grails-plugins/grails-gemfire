@@ -17,6 +17,8 @@ package org.grails.plugins.gemfire
 import com.gemstone.gemfire.cache.*
 import com.gemstone.gemfire.cache.client.Pool
 import org.codehaus.groovy.grails.plugins.GrailsPluginManager
+import org.grails.datastore.gorm.events.AutoTimestampEventListener
+import org.grails.datastore.gorm.events.DomainEventListener
 import org.springframework.beans.factory.FactoryBean
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
@@ -50,6 +52,9 @@ class GemfireDatastoreFactoryBean implements FactoryBean<GemfireDatastore>, Appl
 		datastore.gemfirePool = pool
 	}	
 
+    applicationContext.addApplicationListener new DomainEventListener(datastore)
+    applicationContext.addApplicationListener new AutoTimestampEventListener(datastore)
+    
 	datastore.afterPropertiesSet()
 
     return datastore
