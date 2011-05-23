@@ -16,7 +16,7 @@ import org.grails.datastore.gorm.utils.InstanceProxy
 
 class GemfireGrailsPlugin {
     // the plugin version
-    def version = "1.0.0.BUILD-SNAPSHOT"
+    def version = "1.0.0.M3"
 
         // the version or versions of Grails the plugin is designed for
     def grailsVersion = "1.3.4 > *"
