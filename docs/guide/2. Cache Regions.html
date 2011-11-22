@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>2 Cache Regions 1.0.0.BUILD-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/1.%20Introduction%20To%20The%20GemFire%20Plugin.html"><strong>1</strong><span>Introduction To The GemFire Plugin</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/2.%20Cache%20Regions.html"><strong>2</strong><span>Cache Regions</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/3.%20Cache%20Servers.html"><strong>3</strong><span>Cache Servers</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>\
+The Gemfire plugin for Grails provides integration with the GemFire in-memory distributed
+data management platform.
+</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../guide/1.%20Introduction%20To%20The%20GemFire%20Plugin.html">&lt;&lt; <strong>1</strong><span>Introduction To The GemFire Plugin</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../guide/3.%20Cache%20Servers.html"><strong>3</strong><span>Cache Servers</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>2 Cache Regions - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Jeff Brown, Graeme Rocher</p>
+
+                    <p><strong>Version:</strong> 1.0.0.BUILD-SNAPSHOT</p>
+
+                    
+                </div>
+
+                
+                <div id="table-of-content">
+                    <h2>Table of Contents</h2>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#2.1%20Cache%20Region%20Configuration"><strong>2.1</strong><span>Cache Region Configuration</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#2.2%20Accesing%20Cache%20Regions"><strong>2.2</strong><span>Accesing Cache Regions</span></a>
+                    </div>
+                    
+                </div>
+                
+
+                
+
+<h1 id="2. Cache Regions">2 Cache Regions</h1>
+GemFire allows your data to be organized within a cache using data regions.  The
+Grails GemFire plugin provides a DSL for describing the regions available to
+the application and provides a simple convention based approach to accessing
+regions.
+
+
+<h2 id="2.1 Cache Region Configuration">2.1 Cache Region Configuration</h2>
+GemFire regions may be described in <code>Config.groovy</code> by assigning a value to
+the <code>grails.gemfire.regions</code> property.  The value should be a closure which
+contains GemFire Region DSL code.  Details about the DSL are described below.<p class="paragraph"/>The code below declares 2 regions with the names <code>region1</code> and <code>region2</code>.<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy
+grails.gemfire.regions = &#123;<p class="paragraph"/>    // declare region1
+    region1()<p class="paragraph"/>    // declare region2
+    region2()
+&#125;</pre></div><p class="paragraph"/>Regions may be configured with a syntax like this:<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy<p class="paragraph"/><span class="java&#45;keyword">import</span> com.gemstone.gemfire.cache.DataPolicy<p class="paragraph"/>grails.gemfire.regions = &#123;<p class="paragraph"/>    region1 &#123;
+        // configure region1&#8230;
+        dataPolicy = DataPolicy.REPLICATE
+        publisher = <span class="java&#45;keyword">false</span>
+    &#125;<p class="paragraph"/>    region2 &#123;
+        // configure region2&#8230;
+        dataPolicy = DataPolicy.PARTITION
+    &#125;<p class="paragraph"/>&#125;</pre></div><p class="paragraph"/>The DSL supports all of the configuration attributes which are supported by the 
+<a href="http://www.gemstone.com/docs/6.0.1/product/docs/japi/com/gemstone/gemfire/cache/AttributesFactory.html" target="blank">AttributesFactory</a>.<p class="paragraph"/>The DSL provides some syntax to simplify the configuration and eliminate 
+explicit references to GemFire classes like <code>DataPolicy</code>.  The previous 
+example could be written like this:<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy<p class="paragraph"/>grails.gemfire.regions = &#123;<p class="paragraph"/>    region1 &#123;
+        // configure region1&#8230;
+        dataPolicy = REPLICATE
+        publisher = <span class="java&#45;keyword">false</span>
+    &#125;<p class="paragraph"/>    region2 &#123;
+        // configure region2&#8230;
+        dataPolicy = PARTITION
+    &#125;<p class="paragraph"/>&#125;</pre></div><p class="paragraph"/>The following table lists all of the properties which may be referenced
+directly without a class prefix.<p class="paragraph"/><table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th><strong class="bold">Class</strong></th><th><strong class="bold">Property Name</strong></th></tr><tr class="table-odd"><td>com.gemstone.gemfire.cache.DataPolicy</td><td>EMPTY</td></tr><tr class="table-even"><td>com.gemstone.gemfire.cache.DataPolicy</td><td>NORMAL</td></tr><tr class="table-odd"><td>com.gemstone.gemfire.cache.DataPolicy</td><td>PARTITION</td></tr><tr class="table-even"><td>com.gemstone.gemfire.cache.DataPolicy</td><td>PERSISTENT_REPLICATE</td></tr><tr class="table-odd"><td>com.gemstone.gemfire.cache.DataPolicy</td><td>PRELOADED</td></tr><tr class="table-even"><td>com.gemstone.gemfire.cache.DataPolicy</td><td>REPLICATE</td></tr><tr class="table-odd"><td>com.gemstone.gemfire.cache.ExpirationAction</td><td>DESTROY</td></tr><tr class="table-even"><td>com.gemstone.gemfire.cache.ExpirationAction</td><td>INVALIDATE</td></tr><tr class="table-odd"><td>com.gemstone.gemfire.cache.ExpirationAction</td><td>LOCAL_DESTROY</td></tr><tr class="table-even"><td>com.gemstone.gemfire.cache.ExpirationAction</td><td>LOCAL_INVALIDATE</td></tr><tr class="table-odd"><td>com.gemstone.gemfire.cache.Scope</td><td>DISTRIBUTED_ACK</td></tr><tr class="table-even"><td>com.gemstone.gemfire.cache.Scope</td><td>DISTRIBUTED_NO_ACK</td></tr><tr class="table-odd"><td>com.gemstone.gemfire.cache.Scope</td><td>GLOBAL</td></tr><tr class="table-even"><td>com.gemstone.gemfire.cache.Scope</td><td>LOCAL</td></tr></table><p class="paragraph"/>Several properties require an instance of the 
+<a href="http://www.gemstone.com/docs/6.0.1/product/docs/japi/com/gemstone/gemfire/cache/ExpirationAttributes.html" target="blank">ExpirationAttributes</a>
+class.  These include <code>regionTimeToLive</code>, <code>regionIdleTimeout</code>, <code>entryTimeToLive</code> and <code>entryIdleTimeout</code>.  Configuring those
+properties might look something like this:<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy
+<span class="java&#45;keyword">import</span> com.gemstone.gemfire.cache.ExpirationAction
+<span class="java&#45;keyword">import</span> com.gemstone.gemfire.cache.ExpirationAttributes<p class="paragraph"/>grails.gemfire.regions = &#123;<p class="paragraph"/>    region1 &#123;
+        entryTimeToLive = <span class="java&#45;keyword">new</span> ExpirationAttributes(120)
+        entryTimeToIdle = <span class="java&#45;keyword">new</span> ExpirationAttributes(200, ExpirationAction.DESTROY)
+    &#125;<p class="paragraph"/>&#125;</pre></div><p class="paragraph"/>The DSLS allows the explicit references to the <code>ExpirationAction</code> and <code>ExpirationAttributes</code> classes 
+to be removed.<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy<p class="paragraph"/>grails.gemfire.regions = &#123;<p class="paragraph"/>    region1 &#123;
+        entryTimeToLive = expirationAttributes(120)
+        entryTimeToIdle = expirationAttributes(200, DESTROY)
+    &#125;<p class="paragraph"/>&#125;</pre></div><p class="paragraph"/>
+
+
+<h2 id="2.2 Accesing Cache Regions">2.2 Accesing Cache Regions</h2>
+For each configured cache region a bean is added to the Spring application 
+context with a corresponding name.  Those beans are the simplest way  
+to interact with the cache region.  The bean may be treated as a map
+of key value pairs.<p class="paragraph"/>If a region were configured like this:<p class="paragraph"/><div class="code"><pre>// grails&#45;app/conf/Config.groovy<p class="paragraph"/>grails.gemfire.regions = &#123;<p class="paragraph"/>    departmentData &#123;
+        entryTimeToLive = expirationAttributes(120)
+    &#125;<p class="paragraph"/>&#125;</pre></div><p class="paragraph"/>It could be accessed like this:<p class="paragraph"/><div class="code"><pre>// grails&#45;app/controllers/com/demo/ReportingController.groovy<p class="paragraph"/><span class="java&#45;keyword">package</span> com.demo<p class="paragraph"/>class ReportingController &#123;<p class="paragraph"/>    def departmentData<p class="paragraph"/>    def index = &#123;
+        def hrData = departmentData&#91;'hr'&#93;
+        def accountData = departmentData&#91;'accounting'&#93;<p class="paragraph"/>        // &#8230;
+    &#125;<p class="paragraph"/>    def addToCache = &#123;
+        def key = params.key
+        def value = params.value
+        departmentData&#91;key&#93; = value<p class="paragraph"/>        redirect action: 'list'
+    &#125;<p class="paragraph"/>    // &#8230;
+&#125;</pre></div><p class="paragraph"/><p class="paragraph"/><p class="paragraph"/>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../guide/1.%20Introduction%20To%20The%20GemFire%20Plugin.html">&lt;&lt; <strong>1</strong><span>Introduction To The GemFire Plugin</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../guide/3.%20Cache%20Servers.html"><strong>3</strong><span>Cache Servers</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Command Line</h1><div class="menu-sub">
+                        
+                            
+                            <div class="menu-item"><a href="../ref/Command%20Line/gemfire-generate.html">gemfire-generate</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Command%20Line/start-cache-server.html">start-cache-server</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Command%20Line/start-locator.html">start-locator</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Command%20Line/stop-cache-server.html">stop-cache-server</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Command%20Line/stop-locator.html">stop-locator</a>
+                            </div>
+                            
+                            </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

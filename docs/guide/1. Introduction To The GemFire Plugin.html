@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>1 Introduction To The GemFire Plugin 1.0.0.BUILD-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/1.%20Introduction%20To%20The%20GemFire%20Plugin.html"><strong>1</strong><span>Introduction To The GemFire Plugin</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/2.%20Cache%20Regions.html"><strong>2</strong><span>Cache Regions</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/3.%20Cache%20Servers.html"><strong>3</strong><span>Cache Servers</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>\
+The Gemfire plugin for Grails provides integration with the GemFire in-memory distributed
+data management platform.
+</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../guide/2.%20Cache%20Regions.html"><strong>2</strong><span>Cache Regions</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>1 Introduction To The GemFire Plugin - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Jeff Brown, Graeme Rocher</p>
+
+                    <p><strong>Version:</strong> 1.0.0.BUILD-SNAPSHOT</p>
+
+                    
+                </div>
+
+                
+                <div id="table-of-content">
+                    <h2>Table of Contents</h2>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#1.1%20Installing%20Gemfire"><strong>1.1</strong><span>Installing Gemfire</span></a>
+                    </div>
+                    
+                </div>
+                
+
+                
+
+<h1 id="1. Introduction To The GemFire Plugin">1 Introduction To The GemFire Plugin</h1>
+The GemFire plugin provides integration with the GemFire in-memory distributed
+data management platform.<p class="paragraph"/>This user guide describes details on configuring and using GemFire specifically 
+in the context of a Grails application.  Complete documentation on GemFire is
+available at <a href="http://www.gemstone.com/products/gemfire" target="blank">http://www.gemstone.com/products/gemfire</a>.
+
+
+
+<h2 id="1.1 Installing Gemfire">1.1 Installing Gemfire</h2>
+<h4>Installing GemFire</h4><p class="paragraph"/>If you plan to use Gemfire only in peer-2-peer mode then you can skip this installation. If you want to use Gemfire in client/server mode then follow these instructions to install Gemfire:
+<ol>
+<li>Register at the <a href="http://www.springsource.com/downloads/gemfire-evaluation-download" target="blank">SpringSource GemFire download site</a> to access the download.</li>
+</ol><p class="paragraph"/>The registration process is quick and helps us help you later if you have questions or problems. The product includes an evaluation license.
+<ol>
+<li>Install GemFire Enterprise 6.5 according to the instructions on the download site.</li>
+</ol><p class="paragraph"/>You can also get GemFire from your salesperson.<p class="paragraph"/><h4>Configure your environment for GemFire.</h4>
+<ol>
+<li>Set the <code>JAVA_HOME</code> environment variable to point to your Java runtime installation. (There should be a bin directory under <code>JAVA_HOME</code>.)</li>
+<li>Set the <code>GEMFIRE</code> environment variable to point to your GemFire installation top-level directory. (There should be bin, lib, dtd, and other directories under GEMFIRE.)</li>
+<li>Configure <code>GF_JAVA</code> and your <code>PATH</code> and <code>CLASSPATH</code> as shown in these examples. (<code>GF_JAVA</code> must point to the java executable file under your <code>JAVA_HOME</code>.)</li>
+</ol><p class="paragraph"/><h4>Unix Bourne and Korn shells (sh, ksh, bash)</h4><p class="paragraph"/><div class="code"><pre>GF_JAVA=$JAVA_HOME/bin/java;export GF_JAVA
+PATH=$PATH:$JAVA_HOME/bin:$GEMFIRE/bin;export PATH
+CLASSPATH=$GEMFIRE/lib/gemfire.jar:$GEMFIRE/lib/antlr.jar:$GEMFIRE/lib/gfSecurityImpl.jar:$CLASSPATH;export CLASSPATH</pre></div><p class="paragraph"/><h4>Windows</h4><p class="paragraph"/><div class="code"><pre>set GF_JAVA=%JAVA_HOME%&#98;in&#106;ava.exe
+set PATH=%PATH%;%JAVA_HOME%&#98;in;%GEMFIRE%&#98;in
+set CLASSPATH=%GEMFIRE%&#108;ib&#103;emfire.jar;%GEMFIRE%&#108;ib&#97;ntlr.jar;%GEMFIRE%&#108;ib&#103;fSecurityImpl.jar;%CLASSPATH%</pre></div>
+
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item next-right"><a href="../guide/2.%20Cache%20Regions.html"><strong>2</strong><span>Cache Regions</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Command Line</h1><div class="menu-sub">
+                        
+                            
+                            <div class="menu-item"><a href="../ref/Command%20Line/gemfire-generate.html">gemfire-generate</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Command%20Line/start-cache-server.html">start-cache-server</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Command%20Line/start-locator.html">start-locator</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Command%20Line/stop-cache-server.html">stop-cache-server</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Command%20Line/stop-locator.html">stop-locator</a>
+                            </div>
+                            
+                            </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>
