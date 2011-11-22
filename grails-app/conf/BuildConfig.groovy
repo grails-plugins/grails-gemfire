@@ -34,11 +34,6 @@ grails.project.dependency.resolution = {
 	        excludes "slf4j-simple", "persistence-api", "commons-logging", "jcl-over-slf4j", "slf4j-api", "jta"
 	        excludes "spring-core", "spring-beans", "spring-aop", "spring-tx", "spring-context", "spring-web"
 	    }
-      	compile("org.grails:grails-datastore-gorm:1.0.0.M6", excludes)	
-      	compile("org.grails:grails-datastore-gorm-gemfire:1.0.0.M6", excludes)
-      	compile( "org.springframework:spring-datastore-web:1.0.0.M6", excludes)
-      	test("org.grails:grails-datastore-gorm-test:1.0.0.M6", excludes)
-
     }
     
     plugins {
