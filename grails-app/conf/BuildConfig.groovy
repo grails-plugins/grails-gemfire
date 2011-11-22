@@ -39,5 +39,8 @@ grails.project.dependency.resolution = {
     plugins {
         test ':functional-test:1.2.7'
         build ":tomcat:$grailsVersion"
+        build(":release:1.0.0.RC3") {
+            export = false
+        }
     }
 }
