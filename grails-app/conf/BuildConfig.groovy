@@ -40,4 +40,9 @@ grails.project.dependency.resolution = {
       	test("org.grails:grails-datastore-gorm-test:1.0.0.M6", excludes)
 
     }
+    
+    plugins {
+        test ':functional-test:1.2.7'
+        build ":tomcat:$grailsVersion"
+    }
 }
