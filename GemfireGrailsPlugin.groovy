@@ -18,16 +18,22 @@ class GemfireGrailsPlugin {
             "**/.gitignore"
     ]
 
-    def author = "Jeff Brown, Graeme Rocher"
+    def author = "Jeff Brown"
     def authorEmail = "jeff.brown@springsource.com"
     def title = "Grails Gemfire Plugin"
-    def description = '''\\
-The Gemfire plugin for Grails provides integration with the GemFire in-memory distributed
-data management platform.
-'''
+    def description = '''\
+The Gemfire plugin for Grails provides integration with the \
+[GemFire|http://www.vmware.com/products/application-platform/vfabric-gemfire/overview.html] \
+in-memory distributed data management platform.'''
+
+    def license = "APACHE"
+    def organization = [name: "SpringSource", url: "http://www.springsource.org/"]
+    def developers = [ [name: "Graeme Rocher", email: "grocher@vmware.com"] ]
+    def issueManagement = [ system: "JIRA", url: "http://jira.grails.org/browse/GPGEMFIRE" ]
+    def scm = [ url: "https://github.com/grails-plugins/grails-gemfire" ]
 
     // URL to the plugin's documentation
-    def documentation = "http://grails.org/plugin/gemfire"
+    def documentation = "http://grails-plugins.github.com/grails-gemfire/"
 
     def doWithSpring = {
 		def gemfireConfig = application.config.grails?.gemfire
